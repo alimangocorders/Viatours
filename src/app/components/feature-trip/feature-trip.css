@@ -1,0 +1,24 @@
+.feature-trip-box{
+  border: 1px solid var(--border-color);
+}
+
+.feature-card-bottom{
+  border-top: 1px solid var(--border-color);
+  padding: 4px;
+  margin-top: 4px;
+
+}
+
+
+.ri-star-fill {
+  color: #FFC107;
+}
+
+.feature-trip-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-trip-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}

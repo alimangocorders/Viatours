@@ -1,0 +1,15 @@
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Moves halfway because we doubled the list */
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* Pause the scrolling when the user hovers */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

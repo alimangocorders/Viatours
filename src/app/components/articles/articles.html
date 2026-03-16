@@ -1,0 +1,35 @@
+<section class="mt-20 feature-trip-section">
+  <div class="container py-20">
+    <div class="flex items-center justify-between mb-10">
+      <h1 class="font-bold text-3xl text-(--text-dark)">Travel Articles</h1>
+      <a href="#">See All</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      @for (item of features; track item.id) {
+      <div
+        class="feature-trip-box group w-full overflow-hidden rounded-2xl cursor-pointer flex items-center justify-center flex-col p-3">
+        <div class="feature-icon w-full bg-[#FEF7F4] flex items-center justify-center relative">
+          <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full" />
+        </div>
+
+
+        <div class="text-start mt-4 px-2 w-full">
+          <div class="flex gap-4 items-center">
+          <p class="text-gray-500 text-sm font-medium">{{ item.date }}</p>
+          <p class="text-gray-500 text-sm font-medium">{{ item.author }}</p>
+          </div>
+
+
+
+          <p class="text-gray-800 text-md font-semibold tracking-wide mt-2 h-12 overflow-hidden">
+            {{ item.title }}
+          </p>
+
+        </div>
+
+      </div>
+      }
+    </div>
+  </div>
+</section>

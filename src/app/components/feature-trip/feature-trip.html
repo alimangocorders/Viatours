@@ -1,0 +1,61 @@
+<section class="mt-12 md:mt-20 feature-trip-section">
+  <div class="container mx-auto px-4 md:px-6 py-10">
+
+    <div class="flex items-center justify-between mb-8 md:mb-10">
+      <h1 class="font-bold text-2xl md:text-3xl text-[var(--text-dark)]">Featured Trips</h1>
+      <div class="flex gap-2">
+        <button class="prev-btn w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[var(--primary-color)] hover:text-white transition-all">
+          <i class="ri-arrow-left-s-line"></i>
+        </button>
+        <button class="next-btn w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[var(--primary-color)] hover:text-white transition-all">
+          <i class="ri-arrow-right-s-line"></i>
+        </button>
+      </div>
+    </div>
+
+    <swiper-container
+      slides-per-view="1"
+      space-between="20"
+      navigation-next-el=".next-btn"
+      navigation-prev-el=".prev-btn"
+      [breakpoints]="{
+        '640': { slidesPerView: 2 },
+        '1024': { slidesPerView: 3 },
+        '1280': { slidesPerView: 4 }
+      }"
+      class="pb-10"
+    >
+      @for (item of features; track item.id) {
+        <swiper-slide>
+          <div class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col p-3 border border-gray-100 mb-4">
+
+            <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-[4/3]">
+              <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full h-full object-cover rounded-xl" />
+              <button class="bg-white absolute rounded-full w-10 h-10 flex items-center justify-center bottom-[-18px] right-3 shadow-md z-10 hover:text-red-500 transition-colors">
+                 <i class="ri-heart-3-line text-xl"></i>
+              </button>
+            </div>
+
+            <div class="text-start mt-4 px-2 w-full pb-2">
+              <p class="text-gray-400 text-xs md:text-sm font-medium uppercase">{{ item.city }}</p>
+              <h3 class="text-gray-800 text-base md:text-lg font-bold mt-2 h-12 line-clamp-2">{{ item.title }}</h3>
+
+              <div class="flex items-center gap-1 mt-3 mb-4">
+                <i class="ri-star-fill text-yellow-400 text-sm"></i>
+                <span class="text-sm font-bold">{{ item.rating }}</span>
+                <span class="text-gray-400 text-sm">({{ item.reviews }})</span>
+              </div>
+
+              <div class="flex items-center justify-between border-t border-gray-100 pt-3">
+                <div class="flex items-center gap-1 text-gray-500 text-sm">
+                  <i class="ri-time-line"></i> {{ item.day }} days
+                </div>
+                <p class="text-[var(--text-dark)] text-sm font-bold">From <span class="text-lg text-[var(--primary-color)]">{{ item.price }}</span></p>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+</section>

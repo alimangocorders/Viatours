@@ -1,0 +1,57 @@
+<div class="bg-[#FEF7F4] px-4 md:px-8 py-6  sticky top-0 z-50">
+  <nav class="container mx-auto flex items-center justify-between gap-4">
+
+    <div class="shrink-0">
+      <img src="images/logo.png" alt="Viatours Logo" class="h-8 md:h-10">
+    </div>
+
+    <div class="hidden lg:flex flex-1 max-w-md mx-8">
+      <div class="relative w-full">
+        <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+          <i class="ri-search-line"></i>
+        </span>
+        <input
+          type="text"
+          placeholder="Search destinations..."
+          class="w-full py-2 pl-10 pr-4 bg-gray-100 border-none rounded-full text-sm focus:ring-2 focus:ring-[var(--primary-color)] outline-none"
+        >
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 md:gap-6">
+      <ul class="hidden xl:flex items-center gap-8 text-sm font-medium text-[var(--text-dark)]">
+        <li><a routerLink="/" class="hover:text-[var(--primary-color)] transition-colors">Home</a></li>
+        <li><a routerLink="/"  class="hover:text-[var(--primary-color)] transition-colors">Destinations</a></li>
+        <li><a routerLink="/tour" class="hover:text-[var(--primary-color)] transition-colors">Tours</a></li>
+
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <button class="hidden sm:block text-sm font-medium text-[var(--text-dark)] px-4 cursor-pointer">Sign Up</button>
+        <button class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-md hover:shadow-lg transition-all hidden sm:block cursor-pointer">
+          Log In
+        </button>
+
+        <button (click)="isMenuOpen = !isMenuOpen" class="xl:hidden text-2xl p-1">
+          <i [class]="isMenuOpen ? 'ri-close-line' : 'ri-menu-fill'"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  @if (isMenuOpen) {
+    <div class="xl:hidden bg-white border-t border-gray-100 absolute left-0 w-full p-6 shadow-xl animate-in fade-in slide-in-from-top-4">
+      <ul class="flex flex-col gap-4 text-lg font-medium">
+        <li><a routerLink="/" class="block py-2">Home</a></li>
+        <li><a routerLink="/" class="block py-2">Destinations</a></li>
+        <li><a routerLink="/tour" class="block py-2">Tours</a></li>
+        <li><a routerLink="/" class="block py-2">Contact</a></li>
+
+        <button class=" block sm:hidden text-sm font-semibold text-[var(--text-dark)] px-4">Sign Up</button>
+        <button class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-md hover:shadow-lg transition-all block sm:hidden">
+          Log In
+        </button>
+      </ul>
+    </div>
+  }
+</div>

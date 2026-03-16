@@ -1,0 +1,41 @@
+/* .hero-section{
+  background: url("/images/hero-bg.png");
+  object-fit: cover;
+} */
+
+
+.hero-section {
+  background: url("/images/hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 80vh;
+}
+
+
+.icon-box{
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--border-color);
+}
+
+
+.icon-box-search{
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+}
+
+.search-text{
+  color: var(--text-light);
+}
+
+.hero-heading{
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 72px;
+}
+
+.hero-heading-part{
+  color: var(--primary-color);
+}
