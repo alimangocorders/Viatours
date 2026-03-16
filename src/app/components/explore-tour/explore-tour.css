@@ -1,8 +1,10 @@
-.explore-tour-section{
-  background: url("/images/action-bg.png");
-  background-repeat: no-repeat;
-  background-position: center;
+.explore-tour-section {
+    /* Use background-image for clarity */
+    background-image: url("/images/action-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
 }
-
-
-

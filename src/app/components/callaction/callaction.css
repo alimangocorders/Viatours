@@ -1,7 +1,12 @@
 .explore-tour-section{
   background: url("/images/callofactionbg.png");
-      background-repeat: no-repeat;
+    background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
