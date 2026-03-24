@@ -60,13 +60,13 @@
     @for (step of trip.itinerary; track step.day; let idx = $index) {
       <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
 
-        <div class="absolute left-7 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-16 h-16 rounded-full border-4 border-white bg-orange-500 text-white shadow-md z-10">
-           <span class="text-[10px] font-black uppercase tracking-tighter text-center leading-none">
+        <div class="absolute left-7 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-18 h-18 rounded-full border-4 border-white bg-orange-500 text-white shadow-md z-10">
+           <span class="text-[8px] font-bold uppercase tracking-tighter text-center leading-none">
              {{ step.day }}
            </span>
         </div>
 
-        <div class="w-[calc(100%-5rem)] ml-auto md:ml-0 md:w-[45%] p-6 rounded-[2rem] border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-xl hover:shadow-orange-100/50 transition-all duration-300">
+        <div class="w-[calc(100%-5rem)] ml-auto md:ml-0 md:w-[44%] p-6 rounded-[2rem] border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-xl hover:shadow-orange-100/50 transition-all duration-300">
           <h4 class="font-bold text-gray-900 text-lg">{{ step.title }}</h4>
           <p class="text-sm text-gray-500 mt-2 leading-relaxed">{{ step.desc }}</p>
         </div>
