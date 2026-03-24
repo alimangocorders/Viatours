@@ -1,0 +1,205 @@
+<section class="bg-white sticky top-22 z-30 py-6 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center">
+      @for (step of steps; track step.number; let idx = $index) {
+      <div class="flex items-center flex-1 justify-center lg:justify-start">
+        <div class="flex items-center justify-center w-10 h-10 rounded-full font-bold text-sm transition-all" [class]="
+              currentStep >= step.number
+                ? 'bg-orange-500 text-white shadow-md'
+                : 'bg-gray-200 text-gray-500'
+            ">
+          @if (currentStep > step.number) {
+          <i class="ri-check-line text-lg"></i>
+          } @else {
+          {{ step.number }}
+          }
+        </div>
+        <div class="hidden md:block ml-3">
+          <p class="text-[10px] font-black uppercase tracking-wider"
+            [class.text-orange-500]="currentStep >= step.number">
+            {{ step.title }}
+          </p>
+        </div>
+        @if (idx < steps.length - 1) { <div class="flex-1 h-[2px] mx-4 hidden lg:block"
+          [class]="currentStep > step.number ? 'bg-orange-500' : 'bg-gray-200'">
+      </div>
+      }
+    </div>
+    }
+  </div>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="lg:col-span-2">
+@if (currentStep === 1) {
+  <div class="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div class="relative h-64 overflow-hidden rounded-3xl shadow-lg">
+      <img [src]="'/images/' + selectedTour?.image" class="w-full h-full object-cover">
+      <div class="absolute top-4 left-4">
+        <span class="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">
+          {{ selectedTour?.category }}
+        </span>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-3xl font-black text-gray-900 leading-tight">{{ selectedTour?.title }}</h1>
+        <p class="text-gray-400 mt-1 flex items-center gap-1 uppercase text-xs font-bold tracking-widest">
+          <i class="ri-map-pin-2-fill text-orange-500"></i> {{ selectedTour?.location }}
+        </p>
+      </div>
+      <div class="text-right">
+        <p class="text-xs text-gray-400 font-bold uppercase">Price per person</p>
+        <p class="text-3xl font-black text-orange-500">{{ selectedTour?.price | currency:'USD' }}</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 p-6 rounded-3xl border border-gray-100">
+      <h3 class="font-bold text-gray-900 mb-3">About this adventure</h3>
+      <p class="text-gray-600 leading-relaxed">{{ selectedTour?.about }}</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4">
+      <div class="p-4 bg-white border border-gray-100 rounded-2xl text-center shadow-sm">
+        <i class="ri-time-line text-orange-500 text-xl"></i>
+        <p class="text-[10px] text-gray-400 font-bold uppercase mt-1">Duration</p>
+        <p class="text-sm font-bold">{{ selectedTour?.duration }}</p>
+      </div>
+      <div class="p-4 bg-white border border-gray-100 rounded-2xl text-center shadow-sm">
+        <i class="ri-star-line text-orange-500 text-xl"></i>
+        <p class="text-[10px] text-gray-400 font-bold uppercase mt-1">Rating</p>
+        <p class="text-sm font-bold">{{ selectedTour?.rating }} / 5</p>
+      </div>
+      <div class="p-4 bg-white border border-gray-100 rounded-2xl text-center shadow-sm">
+        <i class="ri-calendar-line text-orange-500 text-xl"></i>
+        <p class="text-[10px] text-gray-400 font-bold uppercase mt-1">Plan</p>
+        <p class="text-sm font-bold">{{ selectedTour?.itinerary?.length }} Stages</p>
+      </div>
+    </div>
+  </div>
+}
+
+
+
+    @if (currentStep === 2) {
+    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-8">
+      <h2 class="text-2xl font-bold flex items-center gap-3">
+        <i class="ri-calendar-check-line text-orange-500"></i> Select Schedule
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-bold mb-2">Preferred Start Date</label>
+          <input type="date" [(ngModel)]="bookingData.startDate"
+            class="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-orange-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-2">Number of Travelers</label>
+          <input type="number" [(ngModel)]="bookingData.travelers" min="1"
+            class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
+        </div>
+      </div>
+    </div>
+    }
+
+    @if (currentStep === 3) {
+    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+      <h2 class="text-2xl font-bold flex items-center gap-3">
+        <i class="ri-user-heart-line text-orange-500"></i> Passenger Info
+      </h2>
+      <div class="grid grid-cols-2 gap-4">
+        <input type="text" placeholder="First Name" [(ngModel)]="bookingData.firstName"
+          class="p-4 bg-gray-50 border-0 rounded-2xl" />
+        <input type="text" placeholder="Last Name" [(ngModel)]="bookingData.lastName"
+          class="p-4 bg-gray-50 border-0 rounded-2xl" />
+      </div>
+      <input type="email" placeholder="Email Address" [(ngModel)]="bookingData.email"
+        class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
+      <input type="tel" placeholder="Phone Number" [(ngModel)]="bookingData.phone"
+        class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
+    </div>
+    }
+
+    @if (currentStep === 4) {
+    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+      <h2 class="text-2xl font-bold flex items-center gap-3">
+        <i class="ri-secure-payment-line text-orange-500"></i> Checkout
+      </h2>
+      <div class="relative">
+        <i class="ri-bank-card-fill absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <input type="text" placeholder="Card Number" [(ngModel)]="bookingData.cardNumber"
+          class="w-full pl-12 p-4 bg-gray-50 border-0 rounded-2xl font-mono" />
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <input type="text" placeholder="MM/YY" [(ngModel)]="bookingData.expiry"
+          class="p-4 bg-gray-50 border-0 rounded-2xl text-center" />
+        <input type="text" placeholder="CVV" [(ngModel)]="bookingData.cvv"
+          class="p-4 bg-gray-50 border-0 rounded-2xl text-center" />
+      </div>
+    </div>
+    }
+
+    @if (currentStep === 5) {
+    <div class="text-center py-16 px-8 bg-white rounded-3xl shadow-2xl border-b-8 border-orange-500">
+      <div class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
+        <i class="ri-checkbox-circle-fill text-6xl animate-bounce"></i>
+      </div>
+      <h2 class="text-4xl font-black italic">
+        YOU'RE GOING TO {{ selectedTour?.destination | uppercase }}!
+      </h2>
+      <p class="text-gray-500 mt-4 text-lg">
+        Confirmation Code:
+        <span class="font-mono font-bold text-black">{{ generateConfCode() }}</span>
+      </p>
+      <button (click)="currentStep = 1"
+        class="mt-10 px-10 py-4 bg-black text-white rounded-full font-bold hover:bg-orange-600 transition-colors">
+        Book Another Trip
+      </button>
+    </div>
+    }
+
+    @if (currentStep < 5) { <div class="mt-12 flex justify-between items-center">
+      <button (click)="prevStep()" [disabled]="currentStep === 1"
+        class="text-gray-400 font-bold flex items-center gap-2 disabled:opacity-0">
+        <i class="ri-arrow-left-line"></i> Go Back
+      </button>
+      <button (click)="nextStep()"
+        class="px-12 py-5 bg-orange-500 text-white rounded-2xl font-black shadow-lg shadow-orange-200 hover:scale-105 transition-transform flex items-center gap-3">
+        {{ currentStep === 4 ? 'Complete Booking' : 'Continue' }}
+        <i class="ri-arrow-right-line"></i>
+      </button>
+  </div>
+  }
+  </div>
+
+  <aside class="lg:col-span-1">
+    <div class="bg-black text-white p-8 rounded-3xl sticky top-48 shadow-xl">
+      <h3 class="text-xl font-bold mb-6 flex justify-between items-center">
+        Summary
+        <i class="ri-information-line text-gray-500"></i>
+      </h3>
+      <div class="space-y-4 text-sm">
+        <div class="flex justify-between text-gray-400">
+          <span>Base Price</span>
+          <span class="text-white font-bold">{{ selectedTour?.price | currency: 'USD' }}</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>Travelers</span>
+          <span class="text-white font-bold">x{{ bookingData.travelers }}</span>
+        </div>
+        <div class="pt-4 border-t border-gray-800 flex justify-between items-end">
+          <span class="font-bold">Total Amount</span>
+          <span class="text-3xl font-black text-orange-500">{{
+            totalAmount | currency: 'USD'
+            }}</span>
+        </div>
+      </div>
+
+      <div class="mt-8 p-4 bg-gray-900 rounded-2xl flex items-center gap-3 text-[10px] text-gray-400 leading-tight">
+        <i class="ri-shield-flash-line text-green-400 text-xl"></i>
+        <span>Secure Payment processed via Mangocoders Gateway.</span>
+      </div>
+    </div>
+  </aside>
+</main>

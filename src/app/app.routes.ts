@@ -13,6 +13,8 @@ import { Listing } from './pages/listing/listing';
 
 import { Contact } from './pages/contact/contact';
 import { TripDetail } from './pages/trip-detail/trip-detail';
+import { Booking } from './pages/booking/booking';
+
 
 
 
@@ -24,9 +26,10 @@ export const routes: Routes = [
   { path: 'destinations', component: Destinations },
   { path: 'destination/:id', component: DestinationDetails },
   { path: 'listing', component: Listing},
-
   { path: 'contact', component: Contact},
   { path: 'trip/:id', component: TripDetail},
+  { path: 'booking', component: Booking},
+
 
 
 

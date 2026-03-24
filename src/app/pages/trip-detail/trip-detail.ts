@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TripService } from '../../services/trip.service'; // Adjust path
+import { TripService } from '../../services/trip.service'; // Ensure path is exact
 
 @Component({
   selector: 'app-trip-detail',
@@ -14,11 +14,18 @@ export class TripDetail implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private tripService: TripService
+    private router: Router,
+    private tripService: TripService // Use the class name here
   ) {}
 
-ngOnInit() {
-  const id = Number(this.route.snapshot.paramMap.get('id'));
-  this.trip = this.tripService.getTourById(id);
-}
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.trip = this.tripService.getTourById(id);
+  }
+
+  goToBooking() {
+    this.router.navigate(['/booking'], {
+      state: { selectedTrip: this.trip }
+    });
+  }
 }
