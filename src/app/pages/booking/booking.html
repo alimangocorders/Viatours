@@ -1,3 +1,14 @@
+  <section class="relative bg-(--primary-color) border-b border-gray-100 py-20 overflow-hidden">
+    <div class="container mx-auto px-6 text-start relative z-10">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-gray-200 mb-6 tracking-tight">
+        Complete Your Booking
+      </h1>
+      <p class="text-gray-200 max-w-lg  text-lg">
+        Follow the steps below to finalize your travel arrangements
+      </p>
+    </div>
+  </section>
+
 <section class="bg-white sticky top-22 z-30 py-6 shadow-sm">
   <div class="max-w-7xl mx-auto px-4">
     <div class="flex justify-between items-center">
@@ -161,11 +172,11 @@
 
     @if (currentStep < 5) { <div class="mt-12 flex justify-between items-center">
       <button (click)="prevStep()" [disabled]="currentStep === 1"
-        class="text-gray-400 font-bold flex items-center gap-2 disabled:opacity-0">
+        class="text-gray-400 font-bold flex items-center gap-2 disabled:opacity-0 cursor-pointer">
         <i class="ri-arrow-left-line"></i> Go Back
       </button>
       <button (click)="nextStep()"
-        class="px-12 py-5 bg-orange-500 text-white rounded-2xl font-black shadow-lg shadow-orange-200 hover:scale-105 transition-transform flex items-center gap-3">
+        class="px-12 py-5 bg-orange-500 text-white rounded-2xl font-black shadow-lg shadow-orange-200 hover:scale-105 transition-transform flex items-center gap-3 cursor-pointer">
         {{ currentStep === 4 ? 'Complete Booking' : 'Continue' }}
         <i class="ri-arrow-right-line"></i>
       </button>
