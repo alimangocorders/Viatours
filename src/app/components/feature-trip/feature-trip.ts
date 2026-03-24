@@ -3,7 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 @Component({
   selector: 'app-feature-trip',
   standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   templateUrl: './feature-trip.html',
   styleUrl: './feature-trip.css',
 })

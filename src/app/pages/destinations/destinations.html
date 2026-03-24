@@ -1,0 +1,99 @@
+<section class="feature-trip-section">
+  <div class="feature-trip-header bg-(--primary-color)">
+    <div class="container py-20 text-white">
+      <h1 class="text-4xl md:text-6xl font-bold">Discover Amazing Destinations</h1>
+      <p class="py-2">Explore the world's most breathtaking locations and create unforgettable memories</p>
+
+      <div class="bg-white p-5 text-gray-800 flex flex-wrap md:flex-nowrap gap-4 items-center rounded-2xl mt-4">
+        <div class="w-full">
+          <div class="relative">
+            <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input type="text" placeholder="Search Destinations...."
+              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm">
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 md:px-6 py-20">
+    <div class="flex items-center justify-between mb-8 md:mb-10">
+      <h1 class="font-bold text-2xl md:text-3xl text-(--text-dark)">Trending Now</h1>
+    </div>
+
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      @for (item of Trending_destinations; track item.name) {
+      <div class="trending-box group w-full h-70 overflow-hidden relative rounded-2xl cursor-pointer ">
+        <img [src]="'/images/' + item.image" [alt]="item.name"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+
+        <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/60 to-transparent"></div>
+
+                <div class="w-full flex items-center justify-between absolute top-2 left-0 p-4">
+          <p class="text-gray-200 text-sm font-medium bg-(--primary-color) px-6 py-1.5 rounded-4xl">Trending</p>
+        </div>
+
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-start w-full p-5">
+          <p class="text-white text-2xl font-bold tracking-wide">{{ item.name }}</p>
+          <p class="text-gray-200 text-sm font-medium py-2">{{ item.title }}</p>
+        </div>
+
+        <div class="w-full flex items-center justify-between absolute bottom-0 p-4">
+          <p class="text-gray-200 text-sm font-medium"><i class="ri-calendar-line me-2 text-xl"></i> {{ item.date }}</p>
+          <p class="text-gray-200 text-sm font-medium bg-gray-700 px-4 py-2 rounded-2xl">{{ item.tours }} Tours</p>
+        </div>
+      </div>
+      }
+    </div>
+
+
+
+
+      <div class="mt-20">
+    <div class="flex items-center justify-between mb-8 md:mb-10">
+      <h1 class="font-bold text-2xl md:text-3xl text-(--text-dark)">Available Tours</h1>
+      <!-- <button class="text-(--primary-color) font-semibold border p-4 rounded-xl flex gap-3 cursor-pointer"><i
+          class="ri-filter-2-line"></i>
+        <p>Filters</p>
+      </button> -->
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @for (item of features; track item.id) {
+      <div
+        class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col border border-gray-100">
+        <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-4/3">
+          <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full h-full object-cover rounded-xl" />
+        </div>
+
+        <div class="text-start w-full p-4">
+          <p class="text-gray-400 text-xs md:text-sm font-medium uppercase">{{ item.city }}</p>
+          <h3 class="text-gray-800 text-base md:text-lg font-bold mt-2 h-12 line-clamp-2">
+            {{ item.title }}
+          </h3>
+
+
+
+
+           <div class="flex items-center justify-between border-t border-gray-100 pt-1 mt-4">
+
+          <p class="text-gray-600 text-sm font-medium"><i class="ri-calendar-line me-2 text-lg"></i> {{ item.date }}</p>
+          <p class="text-(--primary-color) text-lg font-bold px-4 py-2 rounded-2xl">{{item.tours}} Tours</p>
+
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+
+  </div>
+</section>
+
+

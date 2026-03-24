@@ -1,3 +1,97 @@
-<div class="container h-screen w-full flex items-center justify-center">
-  <h1 class="text-7xl">New page</h1>
-</div>
+<section class="feature-trip-section">
+  <div class="feature-trip-header bg-(--primary-color)">
+    <div class="container py-20 text-white">
+      <h1 class="text-6xl font-bold">Explore Our Tours</h1>
+      <p class="py-2">Discover handpicked adventures designed for unforgettable experiences</p>
+
+      <div class="bg-white p-5 text-gray-800 flex flex-wrap md:flex-nowrap gap-4 items-center rounded-2xl mt-4">
+        <div class="w-full">
+          <div class="relative">
+            <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input type="text" placeholder="Search Tours...."
+              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm">
+          </div>
+        </div>
+
+        <div class="w-full">
+          <div class="relative">
+            <i class="ri-map-pin-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+
+            <select
+              class="w-full pl-11 pr-10 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm text-gray-700 appearance-none cursor-pointer">
+              <option value="" disabled selected>Select your location</option>
+              <option value="london">London, UK</option>
+              <option value="new-york">New York, USA</option>
+              <option value="paris">Paris, France</option>
+              <option value="dubai">Dubai, UAE</option>
+              <option value="tokyo">Tokyo, Japan</option>
+            </select>
+
+            <i
+              class="ri-arrow-down-s-line absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+
+        <button
+          class="w-full bg-(--primary-color) hover:bg-orange-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-100 transition-all active:scale-[0.98] cursor-pointer flex gap-4 items-center justify-center">
+          <i class="ri-search-line"></i>
+          <p>Search</p>
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 md:px-6 py-10">
+    <div class="flex items-center justify-between mb-8 md:mb-10">
+      <h1 class="font-bold text-2xl md:text-3xl text-(--text-dark)">Available Tours</h1>
+      <button class="text-(--primary-color) font-semibold border p-4 rounded-xl flex gap-3 cursor-pointer"><i
+          class="ri-filter-2-line"></i>
+        <p>Filters</p>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @for (item of features; track item.id) {
+      <div
+        class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col p-3 border border-gray-100">
+        <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-4/3">
+          <button
+            class="bg-(--primary-color) text-white absolute flex items-center justify-center top-3 left-3 shadow-md z-10  transition-colors px-4 py-1 rounded-2xl">
+            {{item.category}}
+          </button>
+          <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full h-full object-cover rounded-xl" />
+          <button
+            class="bg-white absolute rounded-full w-10 h-10 flex items-center justify-center bottom-4.5 right-3 shadow-md z-10 hover:text-red-500 transition-colors">
+            <i class="ri-heart-3-line text-xl"></i>
+          </button>
+        </div>
+
+        <div class="text-start mt-4 px-2 w-full pb-2">
+          <p class="text-gray-400 text-xs md:text-sm font-medium uppercase">{{ item.city }}</p>
+          <h3 class="text-gray-800 text-base md:text-lg font-bold mt-2 h-12 line-clamp-2">
+            {{ item.title }}
+          </h3>
+
+          <div class="flex items-center gap-1 mt-3 mb-4">
+            <i class="ri-star-fill text-yellow-400 text-sm"></i>
+            <span class="text-sm font-bold">{{ item.rating }}</span>
+            <span class="text-gray-400 text-sm">({{ item.reviews }})</span>
+          </div>
+
+          <div class="flex items-center justify-between border-t border-gray-100 pt-3">
+            <div class="flex items-center gap-1 text-gray-500 text-sm">
+              <i class="ri-time-line"></i> {{ item.day }} days
+            </div>
+            <p class="text-(--text-dark) text-sm font-bold">
+              From <span class="text-lg text-(--primary-color)">{{ item.price }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>

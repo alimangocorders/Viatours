@@ -1,30 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {  Navbar } from './layout/navbar/navbar';
-import {  Hero } from './components/hero/hero';
-import {  WhyUs } from './components/why-us/why-us';
-import {  Trending } from './components/trending/trending';
-import {  PopularThings } from './components/popular-things/popular-things';
-import {  FeatureTrip } from './components/feature-trip/feature-trip';
-import {  ExploreTour } from './components/explore-tour/explore-tour';
-import {  Reviews } from './components/reviews/reviews';
-import {  Articles } from './components/articles/articles';
-import {  SpecialOffer } from './components/special-offer/special-offer';
-import {  Partners } from './components/partners/partners';
-import {  Callaction } from './components/callaction/callaction';
-import {  Footer } from './layout/footer/footer';
-
-
-
-
-
-
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { Navbar } from './layout/navbar/navbar';
+import { Footer } from './layout/footer/footer';
+import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common'; // Important for @if to work in some versions
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,  Navbar, Footer],
+  standalone: true,
+  imports: [RouterOutlet, Navbar, Footer, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
+  // This variable will control the visibility of your layout
+  showLayout = true;
+
+  constructor(private router: Router) {
+    // We subscribe to router events
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      // Logic: Hide the layout if the current path is 'login' or 'signup'
+      const currentRoute = event.urlAfterRedirects;
+      this.showLayout = !(currentRoute.includes('login') || currentRoute.includes('signup'));
+    });
+  }
 }
