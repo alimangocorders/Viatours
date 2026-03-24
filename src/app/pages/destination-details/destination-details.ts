@@ -1,14 +1,23 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DestinationService } from '../../services/destination.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-destination-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './destination-details.html',
   styleUrl: './destination-details.css',
 })
-export class DestinationDetails {
 
+export class DestinationDetails implements OnInit {
+  destination: any;
 
+  constructor(
+    private route: ActivatedRoute,
+    private ds: DestinationService
+  ) {}
   popularTours = [
     {
       id: 1,
@@ -95,10 +104,14 @@ export class DestinationDetails {
 
   ]
 
-  constructor() {}
 
   ngOnInit(): void {
-    // Logic to fetch destination details would go here
-  }
+    // 1. Get the 'id' from the URL
+    const id = this.route.snapshot.paramMap.get('id');
 
+    // 2. Fetch data based on that ID
+    if (id) {
+      this.destination = this.ds.getDestinationById(id);
+    }
+  }
 }

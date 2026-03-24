@@ -26,9 +26,9 @@
 
 
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       @for (item of Trending_destinations; track item.name) {
-      <div class="trending-box group w-full h-70 overflow-hidden relative rounded-2xl cursor-pointer ">
+      <div [routerLink]="['/destination', item.id]" class="trending-box group w-full h-70 overflow-hidden relative rounded-2xl cursor-pointer ">
         <img [src]="'/images/' + item.image" [alt]="item.name"
           class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
 
@@ -49,9 +49,40 @@
         </div>
       </div>
       }
+    </div> -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+  @for (item of Trending_destinations; track item.id) {
+    <div [routerLink]="['/destination', item.id]"
+         class="trending-box group w-full h-80 overflow-hidden relative rounded-2xl cursor-pointer">
+
+      <img [src]="'/images/' + item.image" [alt]="item.name"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+
+      <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent"></div>
+
+      <div class="w-full flex items-center justify-between absolute top-2 left-0 p-4">
+        <p class="text-white text-xs font-bold bg-orange-500 px-4 py-1.5 rounded-full uppercase tracking-wider">
+          Trending
+        </p>
+      </div>
+
+      <div class="absolute top-1/2 left-0 -translate-y-1/2 text-start w-full p-5">
+        <p class="text-white text-3xl font-bold tracking-tight">{{ item.name }}</p>
+        <p class="text-gray-200 text-sm font-medium py-2 line-clamp-3">{{ item.country }} — {{ item.about }}</p>
+      </div>
+
+      <div class="w-full flex items-center justify-between absolute bottom-0 p-4 bg-black/20 backdrop-blur-xs">
+        <p class="text-gray-200 text-sm font-medium flex items-center gap-2">
+          <i class="ri-calendar-line text-orange-400"></i> {{ item.time }}
+        </p>
+        <p class="text-white text-xs font-bold bg-gray-800/80 px-4 py-2 rounded-xl">
+          {{ item.highlights?.length * 5 || 12 }}+ Tours
+        </p>
+      </div>
     </div>
-
-
+  }
+</div>
 
 
       <div class="mt-20">
@@ -63,9 +94,9 @@
       </button> -->
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       @for (item of features; track item.id) {
-      <div
+      <div [routerLink]="['/destination', item.id]"
         class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col border border-gray-100">
         <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-4/3">
           <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full h-full object-cover rounded-xl" />
@@ -89,7 +120,40 @@
         </div>
       </div>
       }
+    </div> -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  @for (item of features; track item.id) {
+    <div [routerLink]="['/destination', item.id]"
+         class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100">
+
+      <div class="feature-icon bg-[#FEF7F4] rounded-t-2xl relative aspect-4/3 overflow-hidden">
+        <img [src]="'/images/' + item.image"
+             [alt]="item.name"
+             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+      </div>
+
+      <div class="text-start w-full p-4">
+        <p class="text-orange-500 text-xs md:text-sm font-bold uppercase tracking-wider">
+          {{ item.name }}, {{ item.country }}
+        </p>
+
+        <h3 class="text-gray-800 text-base md:text-lg font-bold mt-2 h-12 line-clamp-2">
+          {{ item.about }}
+        </h3>
+
+        <div class="flex items-center justify-between border-t border-gray-100 mt-4 pt-3">
+          <p class="text-gray-500 text-sm font-medium flex items-center gap-2">
+            <i class="ri-calendar-line text-lg text-orange-400"></i> {{ item.time }}
+          </p>
+
+          <p class="text-orange-600 text-sm font-bold bg-orange-50 px-3 py-1 rounded-lg">
+            {{ (item.highlights?.length || 3) + 10 }} Tours
+          </p>
+        </div>
+      </div>
     </div>
+  }
+</div>
   </div>
 
 

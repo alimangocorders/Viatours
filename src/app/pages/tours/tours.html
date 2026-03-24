@@ -55,8 +55,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       @for (item of features; track item.id) {
-      <div
-        class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col p-3 border border-gray-100">
+      <div  [routerLink]="['/trip', item.id]" class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col p-3 border border-gray-100">
         <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-4/3">
           <button
             class="bg-(--primary-color) text-white absolute flex items-center justify-center top-3 left-3 shadow-md z-10  transition-colors px-4 py-1 rounded-2xl">

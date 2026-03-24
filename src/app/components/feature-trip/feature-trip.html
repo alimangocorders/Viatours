@@ -26,8 +26,8 @@
       class="pb-10"
     >
       @for (item of features; track item.id) {
-        <swiper-slide>
-          <div class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col p-3 border border-gray-100 mb-4">
+        <swiper-slide >
+          <div [routerLink]="['/trip', item.id]" class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col p-3 border border-gray-100 mb-4">
 
             <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-4/3">
               <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full h-full object-cover rounded-xl" />

@@ -1,4 +1,159 @@
-<div class="bg-gray-50 min-h-screen pb-20">
+
+@if (destination) {
+  <div class="bg-gray-50 min-h-screen pb-20">
+    <div class="relative w-full h-88 md:h-[500px]">
+      <img
+        [src]="'/images/' + destination.image"
+        class="w-full h-full object-cover"
+        [alt]="destination.name"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+        <div
+          class="container mx-auto px-6 h-full flex flex-col justify-end pb-12 relative z-10 text-white"
+        >
+          <p class="text-sm md:text-base font-medium flex items-center gap-1.5 mb-2">
+            <i class="ri-map-pin-2-fill text-orange-400"></i> {{ destination.country }}
+          </p>
+          <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+            {{ destination.name }}
+          </h1>
+
+          <div class="flex flex-wrap items-center gap-6 text-sm">
+            <div
+              class="flex items-center gap-1.5 bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-lg"
+            >
+              <i class="ri-star-fill text-yellow-400"></i> 4.9
+              <span class="text-white/80">(Dynamic Reviews)</span>
+            </div>
+            <div class="flex gap-3">
+              <button
+                class="bg-white/10 backdrop-blur-md border border-white/20 px-5 py-2.5 rounded-full flex items-center gap-2 font-medium hover:bg-white/20 transition-all"
+              >
+                <i class="ri-heart-3-line"></i> Save
+              </button>
+              <button
+                class="bg-white/10 backdrop-blur-md border border-white/20 px-5 py-2.5 rounded-full flex items-center gap-2 font-medium hover:bg-white/20 transition-all"
+              >
+                <i class="ri-share-line"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 md:px-6 mt-10">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="lg:w-[68%] space-y-8">
+          <div class="bg-white p-8 md:p-10 shadow-sm border border-gray-100 rounded-3xl">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">About {{ destination.name }}</h2>
+            <p class="text-gray-600 leading-relaxed text-lg">{{ destination.about }}</p>
+
+            <div class="mt-8">
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Main Highlights</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                @for (item of destination.highlights; track item.id) {
+                  <div
+                    class="flex items-center gap-4 p-4 rounded-2xl hover:bg-orange-50 transition-colors group"
+                  >
+                    <div
+                      class="flex-shrink-0 w-8 h-8 bg-orange-100 group-hover:bg-white rounded-xl flex items-center justify-center"
+                    >
+                      <i class="ri-check-line text-orange-600"></i>
+                    </div>
+                    <p class="font-semibold text-gray-700">{{ item.title }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-8 md:p-10 shadow-sm border border-gray-100 rounded-3xl">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Photo Gallery</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+              @for (img of destination.gallery; track img) {
+                <div class="overflow-hidden rounded-3xl group">
+                  <img
+                    [src]="'/images/' + img"
+                    [alt]="destination.name + ' gallery image'"
+                    class="w-full h-60 sm:h-50 xl:h-40 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+              } @empty {
+                <p class="text-gray-400 italic">No photos available for this destination.</p>
+              }
+            </div>
+          </div>
+
+          <div class="bg-white p-8 md:p-10 shadow-sm border border-gray-100 rounded-3xl">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Popular Activities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              @for (act of destination.activities; track act.id) {
+                <div
+                  class="flex items-start gap-4 p-4 rounded-2xl border border-gray-200 hover:shadow-sm transition-all group"
+                >
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-orange-100 group-hover:bg-orange-500 rounded-xl flex items-center justify-center transition-colors"
+                  >
+                    <i [class]="act.icon + ' text-xl text-orange-600 group-hover:text-white'"></i>
+                  </div>
+                  <div>
+                    <p class="font-bold text-gray-800">{{ act.title }}</p>
+                    <p class="text-sm text-gray-500 font-medium">{{ act.text }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:w-[32%]">
+          <div class="sticky top-24 bg-white p-8 shadow-xl border border-gray-100 rounded-3xl">
+            <h2 class="text-2xl font-bold mb-6">Travel Information</h2>
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <i class="ri-sun-foggy-line text-xl text-orange-600"></i>
+                <div>
+                  <p class="font-semibold text-gray-700">Best Time</p>
+                  <p class="text-sm text-gray-500">{{ destination.time }}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <i class="ri-group-line text-xl text-orange-600"></i>
+                <div>
+                  <p class="font-semibold text-gray-700">Language</p>
+                  <p class="text-sm text-gray-500">{{ destination.language }}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <i class="ri-money-dollar-circle-line text-xl text-orange-600"></i>
+                <div>
+                  <p class="font-semibold text-gray-700">Currency</p>
+                  <p class="text-sm text-gray-500">{{ destination.currency }}</p>
+                </div>
+              </div>
+            </div>
+
+            <button routerLink="/contact"
+              class="w-full mt-8 bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-2xl transition-all cursor-pointer"
+            >
+              Contact Us
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="h-screen flex items-center justify-center text-gray-400">
+    <p>Destination not found. Please check the URL.</p>
+  </div>
+}
+
+
+
+<!-- <div class="bg-gray-50 min-h-screen pb-20">
   <div class="relative w-full h-88 md:h-[500px]">
     <img src="/images/image-1.png" class="w-full h-full object-cover" alt="Destination Banner" />
     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
@@ -150,4 +305,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
