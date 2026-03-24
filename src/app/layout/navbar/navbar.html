@@ -32,7 +32,7 @@
          <a routerLink="/login"> Log In</a>
         </button>
 
-        <button (click)="isMenuOpen = !isMenuOpen" class="xl:hidden text-2xl p-1">
+        <button (click)="isMenuOpen = !isMenuOpen" class="xl:hidden text-2xl p-1 cursor-pointer">
           <i [class]="isMenuOpen ? 'ri-close-line' : 'ri-menu-fill'"></i>
         </button>
       </div>
@@ -45,7 +45,7 @@
         <li><a routerLink="/" class="block py-2">Home</a></li>
         <li><a routerLink="/destinations" class="block py-2">Destinations</a></li>
         <li><a routerLink="/tour" class="block py-2">Tours</a></li>
-        <li><a routerLink="/" class="block py-2">Contact</a></li>
+        <li><a routerLink="/contact" class="block py-2">Contact</a></li>
 
         <button class=" block sm:hidden text-sm font-semibold text-(--text-dark) px-4"><a routerLink="/signup"> Sign Up </a></button>
         <button class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-md hover:shadow-lg transition-all block sm:hidden">
