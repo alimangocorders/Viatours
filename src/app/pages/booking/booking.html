@@ -30,7 +30,7 @@
             {{ step.title }}
           </p>
         </div>
-        @if (idx < steps.length - 1) { <div class="flex-1 h-[2px] mx-4 hidden lg:block" [class]="currentStep > step.number ? 'bg-orange-500' : 'bg-gray-200'">
+        @if (idx < steps.length - 1) { <div class="flex-1 h-[2px] mx-4 hidden lg:block" [class]="currentStep > step.number ? 'bg-(--primary-color)' : 'bg-gray-200'">
         </div>
         }
       </div>
@@ -48,14 +48,14 @@
         <div class="relative h-64 overflow-hidden rounded-3xl shadow-lg">
           <img [src]="'/images/' + selectedTour?.image" class="w-full h-full object-cover">
           <div class="absolute top-4 left-4">
-            <span class="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">
+            <span class="bg-(--primary-color) text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">
               {{ selectedTour?.category }}
             </span>
           </div>
         </div>
         <div class="flex flex-col md:flex-row justify-between items-start">
           <div>
-              <i class="ri-map-pin-2-fill text-orange-500"></i> {{ selectedTour?.location }}
+              <i class="ri-map-pin-2-fill text-(--primary-color)"></i> {{ selectedTour?.location }}
 
             <h1 class="text-3xl font-black text-gray-900 leading-tight">{{ selectedTour?.title }}</h1>
             <p class="text-gray-400 mt-1 flex items-center gap-1 uppercase text-xs font-bold tracking-widest">
@@ -63,7 +63,7 @@
           </div>
           <div class="text-right">
             <p class="text-xs text-gray-400 font-bold uppercase">Price per person</p>
-            <p class="text-3xl font-black text-orange-500">{{ selectedTour?.price | currency:'USD' }}</p>
+            <p class="text-3xl font-black text-(--primary-color)">{{ selectedTour?.price | currency:'USD' }}</p>
           </div>
         </div>
       </div>
@@ -72,14 +72,14 @@
       @if (currentStep === 2) {
       <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-8">
         <h2 class="text-2xl font-bold flex items-center gap-3">
-          <i class="ri-calendar-check-line text-orange-500"></i> Select Schedule
+          <i class="ri-calendar-check-line text-(--primary-color)"></i> Select Schedule
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label class="block text-sm font-bold">Preferred Start Date</label>
             <input type="date" name="startDate" [(ngModel)]="bookingData.startDate" #startDate="ngModel" required
-              class="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-orange-500" />
-            @if(startDate.invalid && startDate.touched) { <p class="text-red-500 text-[10px] font-bold italic">Please select a date.</p> }
+              class="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-(--primary-color)" />
+            @if(startDate.invalid && startDate.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic">Please select a date.</p> }
           </div>
           <div class="space-y-2">
             <label class="block text-sm font-bold">Number of Travelers</label>
@@ -93,33 +93,33 @@
       @if (currentStep === 3) {
       <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
         <h2 class="text-2xl font-bold flex items-center gap-3">
-          <i class="ri-user-heart-line text-orange-500"></i> Passenger Info
+          <i class="ri-user-heart-line text-(--primary-color)"></i> Passenger Info
         </h2>
         <div class="grid  grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
             <input type="text" name="firstName" placeholder="First Name" [(ngModel)]="bookingData.firstName" #fName="ngModel" required
               [class.ring-2]="fName.invalid && fName.touched" [class.ring-red-500]="fName.invalid && fName.touched"
               class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
-            @if(fName.invalid && fName.touched) { <p class="text-red-500 text-[10px] font-bold italic ml-1">Required</p> }
+            @if(fName.invalid && fName.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic ml-1">Required</p> }
           </div>
           <div class="space-y-1">
             <input type="text" name="lastName" placeholder="Last Name" [(ngModel)]="bookingData.lastName" #lName="ngModel" required
               [class.ring-2]="lName.invalid && lName.touched" [class.ring-red-500]="lName.invalid && lName.touched"
               class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
-            @if(lName.invalid && lName.touched) { <p class="text-red-500 text-[10px] font-bold italic ml-1">Required</p> }
+            @if(lName.invalid && lName.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic ml-1">Required</p> }
           </div>
         </div>
         <div class="space-y-1">
           <input type="email" name="email" placeholder="Email Address" [(ngModel)]="bookingData.email" #bEmail="ngModel" required email
             [class.ring-2]="bEmail.invalid && bEmail.touched" [class.ring-red-500]="bEmail.invalid && bEmail.touched"
             class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
-          @if(bEmail.invalid && bEmail.touched) { <p class="text-red-500 text-[10px] font-bold italic ml-1">Please enter a valid email.</p> }
+          @if(bEmail.invalid && bEmail.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic ml-1">Please enter a valid email.</p> }
         </div>
         <div class="space-y-1">
           <input type="tel" name="phone" placeholder="Phone Number" [(ngModel)]="bookingData.phone" #phone="ngModel" required
             [class.ring-2]="phone.invalid && phone.touched" [class.ring-red-500]="phone.invalid && phone.touched"
             class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
-           @if(phone.invalid && phone.touched) { <p class="text-red-500 text-[10px] font-bold italic ml-1">Phone number required.</p> }
+           @if(phone.invalid && phone.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic ml-1">Phone number required.</p> }
         </div>
       </div>
       }
@@ -127,7 +127,7 @@
       @if (currentStep === 4) {
       <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
         <h2 class="text-2xl font-bold flex items-center gap-3">
-          <i class="ri-secure-payment-line text-orange-500"></i> Checkout
+          <i class="ri-secure-payment-line text-(--primary-color)"></i> Checkout
         </h2>
 
         <div class="space-y-2">
@@ -145,7 +145,7 @@
               required pattern="(0[1-9]|1[0-2])\/[0-9]{2}" maxlength="5" (input)="formatExpiry($event)"
               [class.ring-2]="expiry.invalid && expiry.touched" [class.ring-red-500]="expiry.invalid && expiry.touched"
               class="w-full p-4 bg-gray-50 border-0 rounded-2xl text-center font-mono" />
-            @if(expiry.invalid && expiry.touched) { <p class="text-red-500 text-[10px] font-bold italic">Invalid Expiry</p> }
+            @if(expiry.invalid && expiry.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic">Invalid Expiry</p> }
           </div>
 
           <div class="space-y-2">
@@ -161,13 +161,13 @@
     </form>
 
     @if (currentStep === 5) {
-    <div class="text-center py-16 px-8 bg-white rounded-3xl shadow-2xl border-b-8 border-orange-500">
+    <div class="text-center py-16 px-8 bg-white rounded-3xl shadow-2xl border-b-8 border-(--primary-color)">
       <div class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
         <i class="ri-checkbox-circle-fill text-6xl animate-bounce"></i>
       </div>
       <h2 class="text-4xl font-black italic uppercase">YOU'RE GOING TO {{ selectedTour?.destination }}!</h2>
       <p class="text-gray-500 mt-4">Confirmation Code: <span class="font-mono font-bold text-black">{{ confirmationCode }}</span></p>
-      <button routerLink="/tour" class="mt-10 px-10 py-4 bg-black text-white rounded-full font-bold hover:bg-orange-600 transition-colors cursor-pointer">Book Another Trip</button>
+      <button routerLink="/tour" class="mt-10 px-10 py-4 bg-black text-white rounded-full font-bold hover:bg-(--primary-color) transition-colors cursor-pointer">Book Another Trip</button>
     </div>
     }
 
@@ -196,7 +196,7 @@
         <div class="flex justify-between text-gray-400"><span>Travelers</span><span class="text-white font-bold">x{{ bookingData.travelers }}</span></div>
         <div class="pt-4 border-t border-gray-800 flex justify-between items-end">
           <span class="font-bold">Total Amount</span>
-          <span class="text-3xl font-black text-orange-500">{{ totalAmount | currency: 'USD' }}</span>
+          <span class="text-3xl font-black text-(--primary-color)">{{ totalAmount | currency: 'USD' }}</span>
         </div>
       </div>
       <div class="mt-8 p-4 bg-gray-900 rounded-2xl flex items-center gap-3 text-[10px] text-gray-400 leading-tight">
