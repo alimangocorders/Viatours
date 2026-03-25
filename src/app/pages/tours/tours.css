@@ -1,0 +1,35 @@
+/* Custom Slider Styling */
+input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #ea580c; /* orange-600 */
+  border: 4px solid white;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+  cursor: pointer;
+  margin-top: -8px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+
+/* Smooth Card Hover Shadow */
+.feature-trip-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px -12px rgba(234, 88, 12, 0.08);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeInDown 0.4s ease-out forwards;
+}

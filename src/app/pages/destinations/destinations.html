@@ -1,163 +1,104 @@
 <section class="feature-trip-section">
   <div class="feature-trip-header bg-(--primary-color)">
-    <div class="container py-20 text-white">
+    <div class="container py-20 text-white px-4">
       <h1 class="text-4xl md:text-6xl font-bold">Discover Amazing Destinations</h1>
-      <p class="py-2">Explore the world's most breathtaking locations and create unforgettable memories</p>
+      <p class="py-2 opacity-90">Explore the world's most breathtaking locations and create unforgettable memories</p>
 
-      <div class="bg-white p-5 text-gray-800 flex flex-wrap md:flex-nowrap gap-4 items-center rounded-2xl mt-4">
+      <div class="bg-white p-3 md:p-5 text-gray-800 flex flex-wrap md:flex-nowrap gap-4 items-center rounded-2xl mt-8 shadow-2xl">
         <div class="w-full">
           <div class="relative">
-            <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-            <input type="text" placeholder="Search Destinations...."
-              class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm">
+            <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              placeholder="Search by destination or country...."
+              class="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all text-base"
+            >
           </div>
         </div>
-
-
-
       </div>
     </div>
   </div>
 
   <div class="container mx-auto px-4 md:px-6 py-20">
-    <div class="flex items-center justify-between mb-8 md:mb-10">
+
+    <div class="flex items-center justify-between mb-8">
       <h1 class="font-bold text-2xl md:text-3xl text-(--text-dark)">Trending Now</h1>
     </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (item of filteredTrending; track item.id) {
+        <div [routerLink]="['/destination', item.id]"
+             class="trending-box group w-full h-80 overflow-hidden relative rounded-2xl cursor-pointer shadow-lg">
+          <img [src]="'/images/' + item.image" [alt]="item.name"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
 
+          <div class="absolute top-4 left-4">
+            <p class="text-white text-[10px] font-black bg-orange-500 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+              Trending
+            </p>
+          </div>
 
-    <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-      @for (item of Trending_destinations; track item.name) {
-      <div [routerLink]="['/destination', item.id]" class="trending-box group w-full h-70 overflow-hidden relative rounded-2xl cursor-pointer ">
-        <img [src]="'/images/' + item.image" [alt]="item.name"
-          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          <div class="absolute top-1/2 left-0 -translate-y-1/2 w-full p-6">
+            <p class="text-white text-3xl font-bold tracking-tight mb-1">{{ item.name }}</p>
+            <p class="text-gray-200 text-sm font-medium line-clamp-2 opacity-90">{{ item.country }} — {{ item.about }}</p>
+          </div>
 
-        <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/60 to-transparent"></div>
-
-                <div class="w-full flex items-center justify-between absolute top-2 left-0 p-4">
-          <p class="text-gray-200 text-sm font-medium bg-(--primary-color) px-6 py-1.5 rounded-4xl">Trending</p>
-        </div>
-
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-start w-full p-5">
-          <p class="text-white text-2xl font-bold tracking-wide">{{ item.name }}</p>
-          <p class="text-gray-200 text-sm font-medium py-2">{{ item.title }}</p>
-        </div>
-
-        <div class="w-full flex items-center justify-between absolute bottom-0 p-4">
-          <p class="text-gray-200 text-sm font-medium"><i class="ri-calendar-line me-2 text-xl"></i> {{ item.date }}</p>
-          <p class="text-gray-200 text-sm font-medium bg-gray-700 px-4 py-2 rounded-2xl">{{ item.tours }} Tours</p>
-        </div>
-      </div>
-      }
-    </div> -->
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-  @for (item of Trending_destinations; track item.id) {
-    <div [routerLink]="['/destination', item.id]"
-         class="trending-box group w-full h-80 overflow-hidden relative rounded-2xl cursor-pointer">
-
-      <img [src]="'/images/' + item.image" [alt]="item.name"
-        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-
-      <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent"></div>
-
-      <div class="w-full flex items-center justify-between absolute top-2 left-0 p-4">
-        <p class="text-white text-xs font-bold bg-orange-500 px-4 py-1.5 rounded-full uppercase tracking-wider">
-          Trending
-        </p>
-      </div>
-
-      <div class="absolute top-1/2 left-0 -translate-y-1/2 text-start w-full p-5">
-        <p class="text-white text-3xl font-bold tracking-tight">{{ item.name }}</p>
-        <p class="text-gray-200 text-sm font-medium py-2 line-clamp-3">{{ item.country }} — {{ item.about }}</p>
-      </div>
-
-      <div class="w-full flex items-center justify-between absolute bottom-0 p-4 bg-black/20 backdrop-blur-xs">
-        <p class="text-gray-200 text-sm font-medium flex items-center gap-2">
-          <i class="ri-calendar-line text-orange-400"></i> {{ item.time }}
-        </p>
-        <p class="text-white text-xs font-bold bg-gray-800/80 px-4 py-2 rounded-xl">
-          {{ item.highlights?.length * 5 || 12 }}+ Tours
-        </p>
-      </div>
-    </div>
-  }
-</div>
-
-
-      <div class="mt-20">
-    <div class="flex items-center justify-between mb-8 md:mb-10">
-      <h1 class="font-bold text-2xl md:text-3xl text-(--text-dark)">Available Tours</h1>
-      <!-- <button class="text-(--primary-color) font-semibold border p-4 rounded-xl flex gap-3 cursor-pointer"><i
-          class="ri-filter-2-line"></i>
-        <p>Filters</p>
-      </button> -->
-    </div>
-
-    <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      @for (item of features; track item.id) {
-      <div [routerLink]="['/destination', item.id]"
-        class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col border border-gray-100">
-        <div class="feature-icon bg-[#FEF7F4] rounded-xl relative aspect-4/3">
-          <img [src]="'/images/' + item.image" [alt]="item.alt" class="w-full h-full object-cover rounded-xl" />
-        </div>
-
-        <div class="text-start w-full p-4">
-          <p class="text-gray-400 text-xs md:text-sm font-medium uppercase">{{ item.city }}</p>
-          <h3 class="text-gray-800 text-base md:text-lg font-bold mt-2 h-12 line-clamp-2">
-            {{ item.title }}
-          </h3>
-
-
-
-
-           <div class="flex items-center justify-between border-t border-gray-100 pt-1 mt-4">
-
-          <p class="text-gray-600 text-sm font-medium"><i class="ri-calendar-line me-2 text-lg"></i> {{ item.date }}</p>
-          <p class="text-(--primary-color) text-lg font-bold px-4 py-2 rounded-2xl">{{item.tours}} Tours</p>
-
+          <div class="w-full flex items-center justify-between absolute bottom-0 p-4 bg-black/20 backdrop-blur-md">
+            <p class="text-gray-200 text-xs font-bold flex items-center gap-2">
+              <i class="ri-calendar-line text-orange-400"></i> {{ item.time }}
+            </p>
+            <p class="text-white text-[10px] font-black bg-gray-900/80 px-4 py-2 rounded-xl border border-white/10 uppercase">
+              {{ item.highlights?.length * 5 || 12 }}+ Tours
+            </p>
           </div>
         </div>
-      </div>
-      }
-    </div> -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-  @for (item of features; track item.id) {
-    <div [routerLink]="['/destination', item.id]"
-         class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100">
-
-      <div class="feature-icon bg-[#FEF7F4] rounded-t-2xl relative aspect-4/3 overflow-hidden">
-        <img [src]="'/images/' + item.image"
-             [alt]="item.name"
-             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-      </div>
-
-      <div class="text-start w-full p-4">
-        <p class="text-orange-500 text-xs md:text-sm font-bold uppercase tracking-wider">
-          {{ item.name }}, {{ item.country }}
-        </p>
-
-        <h3 class="text-gray-800 text-base md:text-lg font-bold mt-2 h-12 line-clamp-2">
-          {{ item.about }}
-        </h3>
-
-        <div class="flex items-center justify-between border-t border-gray-100 mt-4 pt-3">
-          <p class="text-gray-500 text-sm font-medium flex items-center gap-2">
-            <i class="ri-calendar-line text-lg text-orange-400"></i> {{ item.time }}
-          </p>
-
-          <p class="text-orange-600 text-sm font-bold bg-orange-50 px-3 py-1 rounded-lg">
-            {{ (item.highlights?.length || 3) + 10 }} Tours
-          </p>
+      } @empty {
+        <div class="col-span-full py-10 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+           <p class="text-gray-400 font-bold">No trending destinations found for "{{searchTerm}}"</p>
         </div>
+      }
+    </div>
+
+    <div class="mt-24">
+      <div class="flex items-center justify-between mb-8">
+        <h1 class="font-bold text-2xl md:text-3xl text-(--text-dark)">Available Tours</h1>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        @for (item of filteredFeatures; track item.id) {
+          <div [routerLink]="['/destination', item.id]"
+               class="feature-trip-box group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100">
+            <div class="feature-icon bg-gray-100 relative aspect-4/3 overflow-hidden">
+              <img [src]="'/images/' + item.image" [alt]="item.name"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+
+            <div class="p-5">
+              <p class="text-orange-500 text-[10px] font-black uppercase tracking-widest">
+                {{ item.name }}, {{ item.country }}
+              </p>
+              <h3 class="text-gray-800 text-lg font-bold mt-2 h-18 line-clamp-3 leading-tight">
+                {{ item.about }}
+              </h3>
+              <div class="flex items-center justify-between border-t border-gray-50 mt-4 pt-4">
+                <p class="text-gray-500 text-xs font-bold flex items-center gap-2">
+                  <i class="ri-calendar-line text-orange-400"></i> {{ item.time }}
+                </p>
+                <p class="text-orange-600 text-[10px] font-black bg-orange-50 px-3 py-1.5 rounded-lg uppercase">
+                  {{ (item.highlights?.length || 3) + 10 }} Tours
+                </p>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="col-span-full py-10 text-center">
+             <p class="text-gray-400">No tours available for this search.</p>
+          </div>
+        }
       </div>
     </div>
-  }
-</div>
-  </div>
-
 
   </div>
 </section>
-
-

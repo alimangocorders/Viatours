@@ -3,122 +3,155 @@
 
     <div class="mb-10">
       <nav class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-3">
-        <a routerLink="/" class="hover:text-orange-500">Home</a>
+        <a routerLink="/" class="hover:text-(--primary-color)">Home</a>
         <i class="ri-arrow-right-s-line"></i>
-        <a routerLink="/tours" class="hover:text-orange-500">Tours</a>
-        <i class="ri-arrow-right-s-line text-orange-500"></i>
+        <a routerLink="/tours" class="hover:text-(--primary-color)">Tours</a>
+        <i class="ri-arrow-right-s-line text-(--primary-color)"></i>
         <span class="text-gray-900">Phuket</span>
       </nav>
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">Explore all things to do in Phuket</h1>
+      <h1 class="text-2xl md:text-4xl font-bold text-gray-900 leading-tight">Explore all things to do in Phuket</h1>
     </div>
 
     <div class="flex flex-col lg:flex-row gap-8 items-start">
 
-      <aside class="w-full lg:w-1/4 space-y-6 lg:sticky lg:top-24">
-        <div class="bg-orange-500 p-7 rounded-[1rem] text-white shadow-xl shadow-orange-100">
-          <p class="text-[10px] font-black uppercase tracking-[0.1em] mb-4 opacity-80">When are you traveling?</p>
-          <div class="bg-white rounded-2xl p-4 flex items-center justify-between text-gray-900 hover:bg-orange-50 transition-colors cursor-pointer group">
-            <span class="text-sm font-bold">Select Dates</span>
-            <i class="ri-calendar-event-fill text-orange-500 text-xl"></i>
-          </div>
-        </div>
+<aside class="w-full lg:w-1/4 space-y-6 lg:sticky lg:top-24">
 
-        <div class="bg-white p-8 rounded-[1rem] border border-gray-100 shadow-sm">
-          <h3 class="font-extrabold text-gray-900 text-lg mb-6">Filter by Type</h3>
-          <div class="space-y-4">
-            @for (type of filterTypes; track type) {
-              <label class="flex items-center justify-between cursor-pointer group">
-                <div class="flex items-center gap-3">
-                  <div class="relative flex items-center">
-                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 checked:bg-orange-500 checked:border-orange-500 transition-all">
-                    <i class="ri-check-line absolute left-0 text-white opacity-0 peer-checked:opacity-100 w-5 text-center text-xs"></i>
-                  </div>
-                  <span class="text-sm font-medium text-gray-600 group-hover:text-orange-600 transition-colors">{{ type }}</span>
-                </div>
-              </label>
-            }
-          </div>
+  <div class="bg-(--primary-color) p-5 md:p-7 rounded-[1.5rem] text-white shadow-xl shadow-orange-100">
+    <div class="flex justify-between items-center mb-4">
+      <p class="text-[10px] font-black uppercase tracking-[0.1em] opacity-80">When are you traveling?</p>
+      @if (dateRange.start || dateRange.end) {
+        <button (click)="clearDate()" class="text-[10px] font-bold underline cursor-pointer hover:text-orange-100">Clear</button>
+      }
+    </div>
+
+    <div class="grid grid-cols-1 gap-3">
+
+      <div class="relative bg-white rounded-xl p-3 flex items-center justify-between text-gray-900 transition-all active:scale-95 group min-h-[56px]">
+        <div class="flex flex-col">
+          <span class="text-[9px] font-black text-(--primary-color) uppercase">From</span>
+          <span class="text-sm font-bold">{{ dateRange.start ? (dateRange.start | date:'dd MMM') : 'Select Date' }}</span>
         </div>
-      </aside>
+        <i class="ri-calendar-line text-gray-400 text-lg group-hover:text-(--primary-color)"></i>
+
+        <input
+          #startDateInput
+          type="date"
+          [(ngModel)]="dateRange.start"
+          class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20"
+          (click)="startDateInput.showPicker()"
+        />
+      </div>
+
+      <div class="relative bg-white rounded-xl p-3 flex items-center justify-between text-gray-900 transition-all active:scale-95 group min-h-[56px]">
+        <div class="flex flex-col">
+          <span class="text-[9px] font-black text-(--primary-color) uppercase">To</span>
+          <span class="text-sm font-bold">{{ dateRange.end ? (dateRange.end | date:'dd MMM') : 'Select Date' }}</span>
+        </div>
+        <i class="ri-calendar-check-line text-gray-400 text-lg group-hover:text-(--primary-color)"></i>
+
+        <input
+          #endDateInput
+          type="date"
+          [(ngModel)]="dateRange.end"
+          [min]="dateRange.start"
+          class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20"
+          (click)="endDateInput.showPicker()"
+        />
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bg-white p-6 md:p-8 rounded-[1rem] border border-gray-100 shadow-sm">
+    <h3 class="font-extrabold text-gray-900 text-lg mb-6">Filter by Type</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+      @for (type of filterTypes; track type) {
+        <label class="flex items-center justify-between cursor-pointer group">
+          <div class="flex items-center gap-3">
+            <div class="relative flex items-center">
+              <input type="checkbox" (change)="toggleFilter(type, $event)" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 checked:bg-(--primary-color) checked:border-(--primary-color) transition-all">
+              <i class="ri-check-line absolute left-0 text-white opacity-0 peer-checked:opacity-100 w-5 text-center text-xs"></i>
+            </div>
+            <span class="text-sm font-medium text-gray-600 group-hover:text-(--primary-color) transition-colors">{{ type }}</span>
+          </div>
+        </label>
+      }
+    </div>
+  </div>
+</aside>
 
       <main class="w-full lg:w-3/4">
+
         <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 bg-white p-4 rounded-xl border border-gray-100">
-          <p class="text-sm font-medium text-gray-500">Showing <span class="font-bold text-gray-900">{{tourList.length}}</span> curated experiences</p>
-          <div class="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-xl border border-gray-100">
+          <p class="text-sm font-medium text-gray-500 text-center sm:text-left">
+            Showing <span class="font-bold text-gray-900">{{tourList.length}}</span> curated experiences
+          </p>
+          <div class="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-xl border border-gray-100 w-full sm:w-auto justify-center">
             <span class="text-xs font-bold text-gray-400 uppercase">Sort:</span>
-            <select class="bg-transparent text-sm font-bold text-gray-900 outline-none cursor-pointer">
-              <option>Recommended</option>
-              <option>Price: Low to High</option>
-              <option>Top Rated</option>
+            <select [(ngModel)]="sortOption" class="bg-transparent text-sm font-bold text-gray-900 outline-none cursor-pointer">
+              <option value="Recommended">Recommended</option>
+              <option value="Price: Low to High">Price: Low to High</option>
+              <option value="Top Rated">Top Rated</option>
             </select>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-8">
+        <div class="grid grid-cols-1 gap-6 md:gap-8">
           @for (tour of tourList; track tour.id) {
-            <div class="bg-white rounded-[1rem] border border-gray-100 overflow-hidden flex flex-col md:flex-row hover:shadow-2xl hover:shadow-orange-100/50 transition-all duration-500 group">
+            <div class="bg-white rounded-[1.5rem] border border-gray-100 overflow-hidden flex flex-col md:flex-row hover:shadow-2xl hover:shadow-orange-100/50 transition-all duration-500 group">
 
-              <div class="md:w-[35%] relative overflow-hidden">
-                <img [src]="'/images/' + tour.image" class="w-full h-full min-h-[240px] object-cover group-hover:scale-110 transition-transform duration-700" [alt]="tour.title">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-                @if (tour.tag) {
-                  <span class="absolute top-5 left-5 bg-white/90 backdrop-blur-md text-orange-500 text-[10px] font-black px-3 py-1.5 rounded-full shadow-sm">{{ tour.tag }}</span>
-                }
-                @if (tour.discount) {
-                  <span class="absolute bottom-5 left-5 bg-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-lg">{{ tour.discount }}</span>
-                }
+              <div class="w-full md:w-[35%] h-[220px] md:h-auto relative overflow-hidden">
+                <img [src]="'/images/' + tour.image" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" [alt]="tour.title">
+                @if (tour.tag) { <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-(--primary-color) text-[9px] font-black px-3 py-1.5 rounded-full shadow-sm">{{ tour.tag }}</span> }
+                @if (tour.discount) { <span class="absolute bottom-4 left-4 bg-(--primary-color) text-white text-[9px] font-black px-3 py-1.5 rounded-lg">{{ tour.discount }}</span> }
               </div>
 
-              <div class="md:w-[65%] p-8 flex flex-col justify-between">
-                <div>
-                  <div class="flex justify-between items-center mb-3">
-                    <span class="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                      <i class="ri-map-pin-2-fill text-orange-500"></i> {{ tour.location }}
-                    </span>
-                    <span class="bg-gray-100 text-gray-600 text-[10px] font-black px-2.5 py-1 rounded-md">{{ tour.duration }}</span>
-                  </div>
-
-                  <h3 class="text-xl font-bold text-gray-900 group-hover:text-orange-500 transition-colors leading-tight mb-3">
-                    {{ tour.title }}
-                  </h3>
-
-                  <div class="flex items-center gap-4 mb-6">
-                    <div class="flex items-center gap-1 bg-orange-50 px-2 py-1 rounded-lg">
-                      <i class="ri-star-fill text-orange-500 text-sm"></i>
-                      <span class="text-sm font-black text-orange-500">{{ tour.rating }}</span>
-                    </div>
-                    <span class="text-gray-400 text-xs font-bold">{{ tour.reviews }} reviews</span>
-                  </div>
+              <div class="w-full md:w-[65%] p-6 md:p-8 flex flex-col">
+                <div class="flex flex-wrap justify-between items-center mb-3 gap-2">
+                  <span class="flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                    <i class="ri-map-pin-2-fill text-(--primary-color)"></i> {{ tour.location }}
+                  </span>
+                  <span class="bg-gray-100 text-gray-600 text-[9px] font-black px-2.5 py-1 rounded-md">{{ tour.duration }}</span>
                 </div>
 
-                <div class="flex items-center justify-between mt-auto pt-6 border-t border-gray-50">
+                <h3 class="text-lg md:text-xl font-bold text-gray-900 group-hover:text-(--primary-color) transition-colors leading-tight mb-3">{{ tour.title }}</h3>
+
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="flex items-center gap-1 bg-orange-50 px-2 py-1 rounded-lg">
+                    <i class="ri-star-fill text-(--primary-color) text-xs"></i>
+                    <span class="text-xs font-black text-(--primary-color)">{{ tour.rating }}</span>
+                  </div>
+                  <span class="text-gray-400 text-[11px] font-bold">{{ tour.reviews }} reviews</span>
+                </div>
+
+                <div class="flex flex-col min-[400px]:flex-row items-start min-[400px]:items-center justify-between mt-auto pt-6 border-t border-gray-50 gap-4">
                   <div class="flex flex-col">
-                    @if (tour.oldPrice) {
-                      <span class="text-[11px] text-gray-400 font-bold line-through mb-0.5">${{ tour.oldPrice }}</span>
-                    }
+                    @if (tour.oldPrice) { <span class="text-[10px] text-gray-400 font-bold line-through mb-0.5">${{ tour.oldPrice }}</span> }
                     <div class="flex items-baseline gap-1">
-                      <span class="text-[10px] font-bold text-gray-400 uppercase">From</span>
-                      <span class="text-2xl font-black text-gray-900">${{ tour.price }}</span>
+                      <span class="text-[9px] font-black text-gray-400 uppercase tracking-tighter">From</span>
+                      <span class="text-xl md:text-2xl font-black text-gray-900">${{ tour.price }}</span>
                     </div>
                   </div>
-
-                  <button
-                    [routerLink]="['/trip', tour.id]"
-                    class="bg-gray-900 text-white hover:bg-orange-500 font-bold px-8 py-4 rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-2 cursor-pointer">
+                  <button [routerLink]="['/trip', tour.id]" class="w-full min-[400px]:w-auto bg-gray-900 text-white hover:bg-(--primary-color) font-bold px-6 py-3.5 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-sm">
                     View Details <i class="ri-arrow-right-up-line"></i>
                   </button>
                 </div>
               </div>
             </div>
+          } @empty {
+            <div class="py-20 text-center bg-white rounded-3xl border border-dashed border-gray-200">
+              <i class="ri-search-line text-4xl text-gray-200 mb-4 block"></i>
+              <p class="text-gray-500 font-bold">No matches found.</p>
+              <button (click)="clearDate(); selectedFilters.clear();" class="text-(--primary-color) text-sm font-black mt-2 underline">Reset all filters</button>
+            </div>
           }
         </div>
 
-        <div class="mt-16 flex justify-center items-center gap-3">
-          <button class="w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold shadow-lg shadow-orange-100">1</button>
-          <button class="w-12 h-12 rounded-xl bg-white text-gray-600 hover:bg-orange-50 hover:text-orange-500 border border-gray-100 transition-all font-bold">2</button>
-          <span class="mx-2 text-gray-300 font-black">...</span>
-          <button class="w-12 h-12 rounded-xl bg-white text-gray-600 hover:bg-orange-50 hover:text-orange-500 border border-gray-100 transition-all font-bold">20</button>
+        <div class="mt-16 flex flex-wrap justify-center items-center gap-2">
+          <button class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-(--primary-color) text-white flex items-center justify-center font-bold shadow-lg">1</button>
+          <button class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white text-gray-600 hover:bg-orange-50 border border-gray-100 font-bold">2</button>
+          <span class="mx-1 text-gray-300 font-black">...</span>
+          <button class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white text-gray-600 hover:bg-orange-50 border border-gray-100 font-bold">20</button>
         </div>
       </main>
 
