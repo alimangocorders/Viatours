@@ -1,0 +1,89 @@
+<section id="page-guides" class="page bg-(--primary-color)">
+  <div class="relative overflow-hidden">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+
+      <div class="text-center mb-12">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 text-(--primary-color) text-sm font-bold mb-4 uppercase tracking-widest">
+          <i class="ri-lightbulb-flash-line"></i> Expert Knowledge
+        </span>
+        <h1 class="text-4xl lg:text-5xl font-black text-gray-900 mb-4">Travel Guides</h1>
+        <p class="text-gray-200 max-w-2xl mx-auto text-lg font-medium">
+          Discover insider tips, hidden gems, and essential information for your next adventure.
+        </p>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+
+<section id="page-guides" class="page bg-white min-h-screen">
+  <div class="relative overflow-hidden">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+
+
+      <div class="flex flex-wrap justify-center gap-3 mb-16">
+        @for (cat of categories; track cat.id) {
+          <button
+            (click)="setFilter(cat.id)"
+            [class]="selectedFilter === cat.id
+              ? 'bg-(--primary-color) text-white shadow-lg shadow-orange-300'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+            class="px-6 py-2.5 rounded-full font-bold transition-all duration-300 transform active:scale-95 cursor-pointer">
+            {{ cat.label }}
+          </button>
+        }
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @for (guide of filteredGuides; track guide.title) {
+          <article class="group cursor-pointer">
+            <div class="relative rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/50 aspect-[4/3]">
+
+              <img [src]="guide.image" [alt]="guide.title"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+              <div class="absolute top-6 left-6">
+                <span class="px-4 py-1.5 rounded-full bg-(--primary-color) backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/20">
+                  {{ guide.categoryLabel }}
+                </span>
+              </div>
+
+              <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                <h3 class="text-2xl font-black mb-2 leading-tight group-hover:text-(--primary-color) transition-colors">
+                  {{ guide.title }}
+                </h3>
+                <p class="text-gray-200 text-sm mb-4 line-clamp-2 opacity-90 font-medium">
+                  {{ guide.description }}
+                </p>
+
+                <div class="flex items-center gap-6 text-xs font-bold uppercase tracking-widest text-white/70">
+                  <span class="flex items-center gap-2">
+                    <i class="ri-time-line text-(--primary-color) text-lg"></i>
+                    {{ guide.readTime }}
+                  </span>
+                  <span class="flex items-center gap-2">
+                    <i class="ri-eye-line text-(--primary-color) text-lg"></i>
+                    {{ guide.views }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+        } @empty {
+          <div class="col-span-full py-20 text-center">
+            <i class="ri-search-line text-6xl text-gray-200 mb-4 block"></i>
+            <p class="text-gray-400 font-bold">No guides found in this category.</p>
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -14,6 +14,11 @@ import { Listing } from './pages/listing/listing';
 import { Contact } from './pages/contact/contact';
 import { TripDetail } from './pages/trip-detail/trip-detail';
 import { Booking } from './pages/booking/booking';
+import { About } from './pages/about/about';
+import { Reviews } from './pages/reviews/reviews';
+import { TravelGuides } from './pages/travel-guides/travel-guides';
+import { HowItWorks } from './pages/how-it-works/how-it-works';
+
 
 
 
@@ -29,7 +34,10 @@ export const routes: Routes = [
   { path: 'contact', component: Contact},
   { path: 'trip/:id', component: TripDetail},
   { path: 'booking', component: Booking},
-
+  { path: 'about', component: About},
+  { path: 'reviews', component: Reviews},
+  { path: 'travelguides', component: TravelGuides},
+  { path: 'how-it-works', component: HowItWorks},
 
 
 
