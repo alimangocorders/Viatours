@@ -46,22 +46,19 @@
       <div class="space-y-4">
         <h3 class="text-xl font-semibold">Support</h3>
         <ul class="flex flex-col gap-3 text-sm text-gray-400">
-          <li><a href="#" class="hover:text-white transition-colors">Get in Touch</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Help center</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Live chat</a></li>
+          <li><a routerLink="/contact" class="hover:text-white transition-colors">Get in Touch</a></li>
+          <li><a routerLink="/help-center" class="hover:text-white transition-colors">Help center</a></li>
+          <li>
+    <a (click)="chatService.open()"
+       href="javascript:void(0)"
+       class="hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+       <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+       Live chat
+    </a>
+  </li>
           <li><a routerLink="/how-it-works" class="hover:text-white transition-colors">How it works</a></li>
         </ul>
       </div>
-
-      <!-- <div class="space-y-6">
-        <div>
-          <h3 class="text-xl font-semibold">Newsletter</h3>
-          <p class="mt-2 text-sm text-gray-400">Subscribe to the free newsletter and stay up to date</p>
-          <div class="flex items-center bg-white rounded-xl p-1 mt-4 focus-within:ring-2 focus-within:ring-(--primary-color)">
-            <input type="email" placeholder="Your email" class="flex-1 px-4 py-2 bg-transparent outline-none text-gray-900 text-sm">
-            <button class="bg-(--primary-color) text-white px-4 py-2 rounded-lg text-sm font-bold hover:brightness-110">Send</button>
-          </div>
-        </div> -->
 
       <div class="space-y-6">
         <div>

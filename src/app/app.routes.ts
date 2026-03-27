@@ -18,6 +18,7 @@ import { About } from './pages/about/about';
 import { Reviews } from './pages/reviews/reviews';
 import { TravelGuides } from './pages/travel-guides/travel-guides';
 import { HowItWorks } from './pages/how-it-works/how-it-works';
+import { HelpCenter } from './pages/help-center/help-center';
 
 
 
@@ -38,6 +39,7 @@ export const routes: Routes = [
   { path: 'reviews', component: Reviews},
   { path: 'travelguides', component: TravelGuides},
   { path: 'how-it-works', component: HowItWorks},
+  { path: 'help-center', component: HelpCenter},
 
 
 
