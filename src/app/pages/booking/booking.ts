@@ -1,13 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import emailjs from '@emailjs/browser';
+// Import your custom calendar component
+import { CustomCalendarComponent } from '../../components/custom-calendar/custom-calendar';
 
 @Component({
   selector: 'app-booking',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, CustomCalendarComponent],
   templateUrl: './booking.html',
 })
 export class Booking implements OnInit {
@@ -15,6 +17,9 @@ export class Booking implements OnInit {
   selectedTour: any = null;
   isSubmitting = false;
   confirmationCode = '';
+
+  // UI State for custom calendar
+  isCalendarOpen = false;
 
   bookingData = {
     startDate: '',
@@ -36,10 +41,24 @@ export class Booking implements OnInit {
     { number: 5, title: "Confirmation" },
   ];
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private eRef: ElementRef // Added for click-outside detection
+  ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.selectedTour = navigation.extras.state['selectedTrip'];
+    }
+  }
+
+  /**
+   * Closes the custom calendar when clicking outside the component
+   */
+  @HostListener('document:click', ['$event'])
+  clickout(event: MouseEvent) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.isCalendarOpen = false;
     }
   }
 
@@ -48,6 +67,23 @@ export class Booking implements OnInit {
       this.router.navigate(['/']);
     }
     this.confirmationCode = this.generateConfCode();
+  }
+
+  /**
+   * Handles the date selected from your CustomCalendarComponent
+   */
+  onDatePicked(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Set formatted date to bookingData
+    this.bookingData.startDate = `${year}-${month}-${day}`;
+
+    // Close dropdown
+    setTimeout(() => {
+      this.isCalendarOpen = false;
+    }, 200);
   }
 
   get totalAmount() {

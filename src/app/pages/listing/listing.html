@@ -15,7 +15,8 @@
     <div class="flex flex-col lg:flex-row gap-8 items-start">
 
       <aside class="w-full lg:w-1/4 space-y-6 lg:sticky lg:top-24">
-        <div class="bg-(--primary-color) p-5 md:p-7 rounded-[1.5rem] text-white shadow-xl shadow-orange-100">
+
+        <div class="bg-(--primary-color) p-5 md:p-7 rounded-[1.5rem] text-white shadow-xl shadow-orange-100 relative">
           <div class="flex justify-between items-center mb-4 text-left">
             <p class="text-[10px] font-black uppercase tracking-[0.1em] opacity-80 text-left">When are you traveling?</p>
             @if (dateRange.start || dateRange.end) {
@@ -23,39 +24,59 @@
             }
           </div>
 
-          <div class="grid grid-cols-1 gap-3">
-            <div class="relative bg-white rounded-xl p-3 flex items-center justify-between text-gray-900 transition-all active:scale-95 group min-h-[56px]">
-              <div class="flex flex-col text-left">
-                <span class="text-[9px] font-black text-(--primary-color) uppercase">From</span>
-                <span class="text-sm font-bold">{{ dateRange.start ? (dateRange.start | date:'dd MMM') : 'Select Date' }}</span>
-              </div>
-              <i class="ri-calendar-line text-gray-400 text-lg group-hover:text-(--primary-color)"></i>
-              <input #startDateInput type="date" [(ngModel)]="dateRange.start" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20" (click)="startDateInput.showPicker()" />
+          <div (click)="$event.stopPropagation(); isCalendarOpen = !isCalendarOpen"
+               class="bg-white rounded-xl p-3 flex items-center justify-between text-gray-900 transition-all active:scale-95 group min-h-[56px] cursor-pointer relative">
+            <div class="flex flex-col text-left">
+              <span class="text-[9px] font-black text-(--primary-color) uppercase">Date Range</span>
+              <span class="text-sm font-bold">
+                {{ dateRange.start ? (dateRange.start | date:'dd MMM') : 'Select' }} -
+                {{ dateRange.end ? (dateRange.end | date:'dd MMM') : 'Select' }}
+              </span>
             </div>
-
-            <div class="relative bg-white rounded-xl p-3 flex items-center justify-between text-gray-900 transition-all active:scale-95 group min-h-[56px]">
-              <div class="flex flex-col text-left">
-                <span class="text-[9px] font-black text-(--primary-color) uppercase">To</span>
-                <span class="text-sm font-bold">{{ dateRange.end ? (dateRange.end | date:'dd MMM') : 'Select Date' }}</span>
-              </div>
-              <i class="ri-calendar-check-line text-gray-400 text-lg group-hover:text-(--primary-color)"></i>
-              <input #endDateInput type="date" [(ngModel)]="dateRange.end" [min]="dateRange.start" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-20" (click)="endDateInput.showPicker()" />
-            </div>
+            <i class="ri-calendar-event-line text-gray-400 text-lg group-hover:text-(--primary-color)"></i>
           </div>
+
+          @if (isCalendarOpen) {
+            <div class="absolute left-0 right-0 top-[110%] z-[100] flex justify-center">
+              <app-custom-range-calendar (rangeSelected)="onDateRangePicked($event)"></app-custom-range-calendar>
+            </div>
+          }
         </div>
 
-        <div class="bg-white p-6 md:p-8 rounded-[1rem] border border-gray-100 shadow-sm">
-          <h3 class="font-extrabold text-gray-900 text-lg mb-6 text-left">Filter by Type</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+        <div class="bg-white p-7 rounded-[2rem] border border-gray-100 shadow-sm">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="font-black text-gray-900 text-[11px] uppercase tracking-[0.15em]">Filter by Type</h3>
+            <span class="text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded-md">
+              {{ selectedFilters.size }} Selected
+            </span>
+          </div>
+
+          <div class="space-y-2">
             @for (type of filterTypes; track type) {
-              <label class="flex items-center justify-between cursor-pointer group">
+              <label class="flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 group border border-transparent"
+                     [class.bg-orange-50]="isFilterChecked(type)"
+                     [class.border-orange-100]="isFilterChecked(type)">
+
                 <div class="flex items-center gap-3">
-                  <div class="relative flex items-center">
-                    <input type="checkbox" [checked]="isFilterChecked(type)" (change)="toggleFilter(type, $event)" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 checked:bg-(--primary-color) checked:border-(--primary-color) transition-all">
-                    <i class="ri-check-line absolute left-0 text-white opacity-0 peer-checked:opacity-100 w-5 text-center text-xs"></i>
+                  <div class="relative flex items-center justify-center">
+                    <input type="checkbox"
+                           [checked]="isFilterChecked(type)"
+                           (change)="toggleFilter(type, $event)"
+                           class="peer h-5 w-5 cursor-pointer appearance-none rounded-lg border-2 border-gray-200 checked:bg-(--primary-color) checked:border-(--primary-color) transition-all duration-300">
+
+                    <i class="ri-check-line absolute text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none text-xs"></i>
                   </div>
-                  <span class="text-sm font-medium text-gray-600 group-hover:text-(--primary-color) transition-colors">{{ type }}</span>
+
+                  <span class="text-sm font-bold transition-colors"
+                        [class.text-gray-900]="isFilterChecked(type)"
+                        [class.text-gray-500]="!isFilterChecked(type)"
+                        class="group-hover:text-gray-900">
+                    {{ type }}
+                  </span>
                 </div>
+
+                <i class="ri-arrow-right-s-line text-gray-300 group-hover:text-(--primary-color) transition-transform group-hover:translate-x-1"
+                   [class.hidden]="isFilterChecked(type)"></i>
               </label>
             }
           </div>
@@ -63,23 +84,44 @@
       </aside>
 
       <main class="w-full lg:w-3/4">
+
         <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 bg-white p-4 rounded-xl border border-gray-100">
           <p class="text-sm font-medium text-gray-500 text-center sm:text-left">
-            Showing <span class="font-bold text-gray-900">{{tourList.length}}</span> curated experiences
+            Showing <span class="font-bold text-gray-900">{{filteredTours.length}}</span> curated experiences
           </p>
-          <div class="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-xl border border-gray-100 w-full sm:w-auto justify-center">
-            <span class="text-xs font-bold text-gray-400 uppercase">Sort:</span>
-            <select [(ngModel)]="sortOption" class="bg-transparent text-sm font-bold text-gray-900 outline-none cursor-pointer">
-              <option value="Recommended">Recommended</option>
-              <option value="Price: Low to High">Price: Low to High</option>
-              <option value="Top Rated">Top Rated</option>
-            </select>
+
+          <div class="relative w-full sm:w-64">
+            <div (click)="$event.stopPropagation(); isSortOpen = !isSortOpen"
+                 class="flex items-center gap-3 px-5 py-3 bg-gray-50 rounded-xl border border-gray-100 justify-between cursor-pointer hover:border-orange-400 transition-all group">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-black text-gray-400 uppercase">Sort:</span>
+                <span class="text-sm font-bold text-gray-900">{{ sortOption }}</span>
+              </div>
+              <i class="ri-arrow-down-s-line text-gray-400 group-hover:text-orange-500 transition-transform duration-300" [class.rotate-180]="isSortOpen"></i>
+            </div>
+
+            @if (isSortOpen) {
+              <div class="absolute right-0 top-full mt-2 w-full bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                <div class="py-2">
+                  @for (option of sortOptions; track option) {
+                    <div (click)="selectSort(option)"
+                         class="px-5 py-3.5 text-sm font-bold text-gray-600 hover:bg-orange-50 hover:text-(--primary-color) cursor-pointer flex items-center justify-between">
+                      {{ option }}
+                      @if (sortOption === option) {
+                        <i class="ri-check-line text-(--primary-color)"></i>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            }
           </div>
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:gap-8">
           @for (tour of tourList; track tour.id) {
             <div class="bg-white rounded-[1.5rem] border border-gray-100 overflow-hidden flex flex-col md:flex-row hover:shadow-2xl hover:shadow-orange-100/50 transition-all duration-500 group">
+
               <div class="w-full md:w-[35%] h-[220px] md:h-auto relative overflow-hidden">
                 <img [src]="'/images/' + tour.image" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" [alt]="tour.title">
                 @if (tour.tag) { <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-(--primary-color) text-[9px] font-black px-3 py-1.5 rounded-full shadow-sm">{{ tour.tag }}</span> }
@@ -126,6 +168,43 @@
             </div>
           }
         </div>
+
+        @if (totalPages > 0) {
+          <div class="mt-12 flex justify-center items-center gap-2">
+            <button (click)="prevPage()"
+                    [disabled]="currentPage === 1"
+                    class="h-12 w-12 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-400 hover:text-(--primary-color) hover:border-(--primary-color) disabled:opacity-30 disabled:hover:border-gray-200 disabled:hover:text-gray-400 transition-all cursor-pointer">
+              <i class="ri-arrow-left-s-line text-xl"></i>
+            </button>
+
+            <div class="flex items-center gap-2">
+              @for (page of pagesArray; track page) {
+                <button (click)="goToPage(page)"
+                        [class.bg-(--primary-color)]="currentPage === page"
+                        [class.text-white]="currentPage === page"
+                        [class.border-(--primary-color)]="currentPage === page"
+                        [class.bg-white]="currentPage !== page"
+                        [class.text-gray-600]="currentPage !== page"
+                        [class.border-gray-200]="currentPage !== page"
+                        class="h-12 w-12 flex items-center justify-center rounded-xl border font-bold text-sm transition-all hover:border-(--primary-color) hover:text-(--primary-color) cursor-pointer"
+                        [class.hover:text-white]="currentPage === page">
+                  {{ page }}
+                </button>
+              }
+            </div>
+
+            <button (click)="nextPage()"
+                    [disabled]="currentPage === totalPages"
+                    class="h-12 w-12 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-400 hover:text-(--primary-color) hover:border-(--primary-color) disabled:opacity-30 transition-all cursor-pointer">
+              <i class="ri-arrow-right-s-line text-xl"></i>
+            </button>
+          </div>
+
+          <p class="text-center text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-4">
+            Page {{ currentPage }} of {{ totalPages }}
+          </p>
+        }
+
       </main>
     </div>
   </div>

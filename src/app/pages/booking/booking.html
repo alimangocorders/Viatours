@@ -69,26 +69,57 @@
       </div>
       }
 
-      @if (currentStep === 2) {
-      <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-8">
-        <h2 class="text-2xl font-bold flex items-center gap-3">
-          <i class="ri-calendar-check-line text-(--primary-color)"></i> Select Schedule
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="space-y-2">
-            <label class="block text-sm font-bold">Preferred Start Date</label>
-            <input type="date" name="startDate" [(ngModel)]="bookingData.startDate" #startDate="ngModel" required
-              class="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-(--primary-color)" />
-            @if(startDate.invalid && startDate.touched) { <p class="text-(--primary-color) text-[10px] font-bold italic">Please select a date.</p> }
-          </div>
-          <div class="space-y-2">
-            <label class="block text-sm font-bold">Number of Travelers</label>
-            <input type="number" name="travelers" [(ngModel)]="bookingData.travelers" min="1" required
-              class="w-full p-4 bg-gray-50 border-0 rounded-2xl" />
-          </div>
+@if (currentStep === 2) {
+<div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+  <h2 class="text-2xl font-bold flex items-center gap-3">
+    <i class="ri-calendar-check-line text-(--primary-color)"></i> Select Schedule
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="space-y-2 relative">
+      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Preferred Start Date</label>
+
+      <div (click)="$event.stopPropagation(); isCalendarOpen = !isCalendarOpen"
+           class="w-full p-4 bg-gray-50 rounded-2xl flex items-center justify-between cursor-pointer border-2 border-transparent transition-all hover:border-orange-100 group"
+           [class.ring-2]="isCalendarOpen"
+           [class.ring-(--primary-color)]="isCalendarOpen">
+
+        <div class="flex flex-col">
+          <span class="text-sm font-bold" [class.text-gray-400]="!bookingData.startDate">
+            {{ bookingData.startDate ? (bookingData.startDate | date:'fullDate') : 'Choose a date' }}
+          </span>
         </div>
+        <i class="ri-calendar-event-line text-xl transition-colors group-hover:text-(--primary-color)"
+           [class.text-(--primary-color)]="bookingData.startDate"
+           [class.text-gray-300]="!bookingData.startDate"></i>
       </div>
+
+      <input type="hidden" name="startDate" [(ngModel)]="bookingData.startDate" required #startDate="ngModel">
+
+      @if (isCalendarOpen) {
+        <div class="absolute left-0 top-[105%] z-[100] origin-top">
+          <app-custom-calendar (dateSelected)="onDatePicked($event)"></app-custom-calendar>
+        </div>
       }
+
+      @if(startDate.invalid && startDate.touched) {
+        <p class="text-(--primary-color) text-[10px] font-bold italic ml-1">Please select a travel date.</p>
+      }
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Number of Travelers</label>
+      <div class="relative flex items-center">
+        <i class="ri-group-line absolute left-4 text-gray-400 text-lg"></i>
+        <input type="number" name="travelers" [(ngModel)]="bookingData.travelers" min="1" required
+               class="w-full p-4 pl-12 bg-gray-50 border-0 rounded-2xl font-bold focus:ring-2 focus:ring-(--primary-color) transition-all"
+               placeholder="1" />
+      </div>
+      <p class="text-[9px] text-gray-400 font-medium ml-1">Maximum 10 people per booking</p>
+    </div>
+  </div>
+</div>
+}
 
       @if (currentStep === 3) {
       <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
