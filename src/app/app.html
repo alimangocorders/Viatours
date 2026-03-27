@@ -4,7 +4,7 @@
   <router-outlet></router-outlet>
 
   @if (chatService.isOpen()) {
-    <div class="fixed bottom-24 right-6 z-[999] animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div class="fixed bottom-24  right-2 md:right-6 z-[999] animate-in fade-in slide-in-from-bottom-4 duration-300">
       <div class="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] w-80 sm:w-96 overflow-hidden border border-gray-100 flex flex-col">
 
         <div class="bg-(--primary-color) p-5 text-white flex items-center justify-between">
@@ -65,7 +65,7 @@
   }
 
   <button (click)="chatService.toggle()"
-          class="fixed bottom-6 right-6 z-[999] w-14 h-14 bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-90 transition-all cursor-pointer">
+          class="fixed bottom-6  right-2 md:right-6 z-[999] w-14 h-14 bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-90 transition-all cursor-pointer">
     <i [class]="chatService.isOpen() ? 'ri-arrow-down-s-line' : 'ri-chat-smile-3-line'" class="text-2xl"></i>
   </button>
 </main>

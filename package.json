@@ -19,6 +19,7 @@
     "@angular/router": "^21.2.0",
     "@emailjs/browser": "^4.4.1",
     "@tailwindcss/postcss": "^4.2.1",
+    "crisp-sdk-web": "^1.0.27",
     "remixicon": "^4.9.1",
     "rxjs": "~7.8.0",
     "swiper": "^12.1.2",

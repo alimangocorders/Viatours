@@ -6,26 +6,35 @@
       </h1>
 
       <div class="relative max-w-2xl mx-auto group">
-
         <div class="relative bg-white rounded-2xl flex items-center p-2 shadow-2xl">
           <i class="ri-search-2-line text-gray-400 ml-4 text-xl"></i>
-          <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearchEnter()"
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearchEnter()"
             placeholder="Search common questions..."
-            class="flex-grow px-4 py-4 focus:outline-none text-gray-800 text-base placeholder:text-gray-400" />
-          <button (click)="onSearchEnter()"
-            class="bg-[#0a1128] hover:bg-black text-white px-8 py-4 rounded-xl font-bold transition-all active:scale-95 cursor-pointer">
+            class="flex-grow px-4 py-4 focus:outline-none text-gray-800 text-base placeholder:text-gray-400"
+          />
+          <button
+            (click)="onSearchEnter()"
+            class="bg-[#0a1128] hover:bg-black text-white px-8 py-4 rounded-xl font-bold transition-all active:scale-95 cursor-pointer"
+          >
             Search
           </button>
         </div>
       </div>
 
       <div class="flex flex-wrap justify-center gap-3 mt-8">
-        <span class="text-white/70 text-xs font-medium uppercase tracking-wider self-center mr-2">Popular:</span>
+        <span class="text-white/70 text-xs font-medium uppercase tracking-wider self-center mr-2"
+          >Popular:</span
+        >
         @for (s of ['Refunds', 'Visa Info', 'Safety', 'Vouchers']; track s) {
-        <button (click)="setSearch(s)"
-          class="bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-xs px-4 py-2 rounded-lg border border-white/10 transition-all cursor-pointer">
-          {{ s }}
-        </button>
+          <button
+            (click)="setSearch(s)"
+            class="bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-xs px-4 py-2 rounded-lg border border-white/10 transition-all cursor-pointer"
+          >
+            {{ s }}
+          </button>
         }
       </div>
     </div>
@@ -34,22 +43,26 @@
   <section class="relative z-20 -mt-16 px-6">
     <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
       @for (c of categories; track c.title) {
-      <div
-        class="bg-white rounded-2xl p-6 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center text-center cursor-pointer hover:border-orange-200 hover:-translate-y-2 transition-all duration-300 group">
-        <div [class]="
+        <div
+          class="bg-white rounded-2xl p-6 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center text-center cursor-pointer hover:border-orange-200 hover:-translate-y-2 transition-all duration-300 group"
+        >
+          <div
+            [class]="
               'w-14 h-14 ' +
               c.bg +
               ' rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform'
-            ">
-          <i [class]="c.icon + ' text-2xl ' + c.color"></i>
+            "
+          >
+            <i [class]="c.icon + ' text-2xl ' + c.color"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 text-sm mb-1">{{ c.title }}</h3>
+          <p class="text-gray-400 text-[11px] leading-relaxed mb-3 line-clamp-2">{{ c.desc }}</p>
+          <span
+            class="text-[10px] font-black uppercase tracking-tighter px-2 py-1 rounded bg-gray-50 text-gray-500 group-hover:bg-orange-50 group-hover:text-(--primary-color) transition-colors"
+          >
+            {{ c.count }} Resources
+          </span>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm mb-1">{{ c.title }}</h3>
-        <p class="text-gray-400 text-[11px] leading-relaxed mb-3 line-clamp-2">{{ c.desc }}</p>
-        <span
-          class="text-[10px] font-black uppercase tracking-tighter px-2 py-1 rounded bg-gray-50 text-gray-500 group-hover:bg-orange-50 group-hover:text-(--primary-color) transition-colors">
-          {{ c.count }} Resources
-        </span>
-      </div>
       }
     </div>
   </section>
@@ -66,42 +79,52 @@
 
         <div class="space-y-4">
           @for (faq of filteredFaqs(); track faq.q; let i = $index) {
-          <div
-            class="bg-white border-b border-gray-100 last:border-0 overflow-hidden transition-all duration-300 shadow-md rounded-xl">
-<button (click)="toggleFaq(i)"
-  class="w-full py-6 px-6 flex items-start justify-between text-left gap-4 group cursor-pointer">
+            <div
+              class="bg-white border-b border-gray-100 last:border-0 overflow-hidden transition-all duration-300 shadow-md rounded-xl"
+            >
+              <button
+                (click)="toggleFaq(i)"
+                class="w-full py-6 px-6 flex items-start justify-between text-left gap-4 group cursor-pointer"
+              >
+                <span
+                  class="font-bold text-lg text-gray-800 group-hover:text-(--primary-color) transition-colors"
+                >
+                  {{ faq.q }}
+                </span>
 
-  <span class="font-bold text-lg text-gray-800 group-hover:text-(--primary-color) transition-colors">
-    {{ faq.q }}
-  </span>
+                <div
+                  class="faq-btn mt-1 w-8 h-8 flex-shrink-0 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-(--primary-color) group-hover:text-white transition-all shadow-sm"
+                  [class.bg-orange-500]="openFaqIndex() === i"
+                  [class.text-white]="openFaqIndex() === i"
+                >
+                  <i
+                    class="ri-add-line text-xl transition-transform duration-300"
+                    [class.rotate-45]="openFaqIndex() === i"
+                  ></i>
+                </div>
+              </button>
 
-  <div
-    class="faq-btn mt-1 w-8 h-8 flex-shrink-0 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-(--primary-color) group-hover:text-white transition-all shadow-sm"
-    [class.bg-orange-500]="openFaqIndex() === i"
-    [class.text-white]="openFaqIndex() === i">
-
-    <i class="ri-add-line text-xl transition-transform duration-300"
-      [class.rotate-45]="openFaqIndex() === i"></i>
-  </div>
-</button>
-
-            @if (openFaqIndex() === i) {
-            <div class="pb-8 px-6 text-gray-500 leading-relaxed text-[15px]">
-              {{ faq.a }}
+              @if (openFaqIndex() === i) {
+                <div class="pb-8 px-6 text-gray-500 leading-relaxed text-[15px]">
+                  {{ faq.a }}
+                </div>
+              }
             </div>
-            }
-          </div>
           } @empty {
-          <div class="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-            <i class="ri-search-line text-5xl text-gray-300 mb-4 block"></i>
-            <p class="text-gray-500 text-lg font-bold">
-              No questions found matching "{{ searchQuery() }}"
-            </p>
-            <button (click)="searchQuery.set('')"
-              class="mt-4 text-(--primary-color) font-black uppercase tracking-widest text-xs hover:underline cursor-pointer">
-              Show all questions
-            </button>
-          </div>
+            <div
+              class="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200"
+            >
+              <i class="ri-search-line text-5xl text-gray-300 mb-4 block"></i>
+              <p class="text-gray-500 text-lg font-bold">
+                No questions found matching "{{ searchQuery() }}"
+              </p>
+              <button
+                (click)="searchQuery.set('')"
+                class="mt-4 text-(--primary-color) font-black uppercase tracking-widest text-xs hover:underline cursor-pointer"
+              >
+                Show all questions
+              </button>
+            </div>
           }
         </div>
       </div>
@@ -116,13 +139,17 @@
             Our support ninjas are ready to jump in and help you 24/7.
           </p>
           <div class="space-y-3 relative z-10">
-            <button (click)="chatService.open()"
-              class="w-full bg-(--primary-color) hover:bg-orange-500 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 cursor-pointer">
+            <button
+              (click)="chatService.open()"
+              class="w-full bg-(--primary-color) hover:bg-orange-500 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 cursor-pointer"
+            >
               <i class="ri-chat-smile-3-line text-xl"></i>
               Start Live Chat
             </button>
-            <button routerLink="/contact"
-              class="w-full bg-white/10 hover:bg-white/20 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 border border-white/10 transition-all cursor-pointer">
+            <button
+              routerLink="/contact"
+              class="w-full bg-white/10 hover:bg-white/20 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 border border-white/10 transition-all cursor-pointer"
+            >
               <i class="ri-mail-send-line text-xl"></i> Send an Email
             </button>
           </div>
@@ -133,20 +160,27 @@
 
   <section class="mx-6 mb-12">
     <div
-      class="max-w-7xl mx-auto rounded-[3rem] bg-(--primary-color) p-12 md:p-20 text-center text-white relative overflow-hidden">
-      <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+      class="max-w-7xl mx-auto rounded-[3rem] bg-(--primary-color) p-12 md:p-20 text-center text-white relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"
+      ></div>
       <div class="relative z-10">
         <h2 class="text-3xl md:text-5xl font-black mb-6">Experience a better way to travel</h2>
         <p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
           Join over 50,000+ travelers who trust Viatours for their global adventures.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <button routerLink="/destinations"
-            class="bg-white text-gray-900 px-10 py-5 rounded-2xl font-black shadow-xl hover:shadow-orange-500/20 transition-all active:scale-95 cursor-pointer">
+          <button
+            routerLink="/destinations"
+            class="bg-white text-gray-900 px-10 py-5 rounded-2xl font-black shadow-xl hover:shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
+          >
             Explore Destinations
           </button>
-          <button routerLink="/contact"
-            class="bg-black/20 backdrop-blur-md text-white border border-white/30 px-10 py-5 rounded-2xl font-black hover:bg-black/30 transition-all cursor-pointer">
+          <button
+            routerLink="/contact"
+            class="bg-black/20 backdrop-blur-md text-white border border-white/30 px-10 py-5 rounded-2xl font-black hover:bg-black/30 transition-all cursor-pointer"
+          >
             Contact us
           </button>
         </div>

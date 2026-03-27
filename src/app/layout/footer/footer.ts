@@ -31,7 +31,7 @@ export class Footer {
     this.isSubmitting = true;
 
     const payload = {
-      access_key: "5a46e4ac-581e-46c8-95b2-4fdc4e67bc28",
+      access_key: "a04d6c58-42c3-46c5-9cb5-a8dea84b55f3",
       subject: "New Newsletter Subscription",
       from_name: "Viatours Website",
       email: this.newsletterEmail,
