@@ -1,77 +1,75 @@
 <app-navbar></app-navbar>
 
-<main>
+<main class="relative min-h-screen">
   <router-outlet></router-outlet>
 
   @if (chatService.isOpen()) {
-  <div class="fixed bottom-24 right-6 z-[999] animate-in fade-in slide-in-from-bottom-4 duration-300">
-    <div
-      class="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] w-80 sm:w-96 overflow-hidden border border-gray-100 flex flex-col">
-      <div class="bg-(--primary-color) p-5 text-white">
-        <div class="flex items-center justify-between">
+    <div class="fixed bottom-24 right-6 z-[999] animate-in fade-in slide-in-from-bottom-4 duration-300">
+      <div class="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] w-80 sm:w-96 overflow-hidden border border-gray-100 flex flex-col">
+
+        <div class="bg-(--primary-color) p-5 text-white flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="relative">
-              <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
-                <i class="ri-customer-service-2-fill text-xl"></i>
-              </div>
-              <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></span>
+            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+              <i class="ri-customer-service-2-fill text-xl"></i>
             </div>
             <div>
-              <h4 class="font-bold text-sm tracking-tight">Viatours Support</h4>
-              <p class="text-[10px] text-white/80 uppercase font-black tracking-widest">Online</p>
+              <h4 class="font-bold text-sm">Viatours Support</h4>
+              <p class="text-[10px] opacity-80 uppercase font-black tracking-widest">Online</p>
             </div>
           </div>
-          <button (click)="chatService.close()"
-            class="w-10 h-10 hover:bg-white/20 p-2 rounded-full transition-colors cursor-pointer flex justify-center items-center">
+          <button (click)="chatService.close()" class="w-10 h-10 flex justify-center items-center hover:bg-white/20 p-2 rounded-full cursor-pointer">
             <i class="ri-close-line text-xl"></i>
           </button>
         </div>
-      </div>
 
-      <div class="h-80 overflow-y-auto p-5 space-y-4 bg-[#F8F9FA]" #scrollFrame [scrollTop]="scrollFrame.scrollHeight">
-        @for (msg of chatService.messages(); track msg.time) {
-        <div class="flex w-full" [class.justify-end]="msg.sender === 'user'">
-          <div class="max-w-[85%] p-3 px-4 text-sm shadow-sm" [class.bg-white]="msg.sender === 'bot'"
-            [class.text-gray-700]="msg.sender === 'bot'" [class.rounded-2xl]="true"
-            [class.rounded-tl-none]="msg.sender === 'bot'" [class.bg-orange-500]="msg.sender === 'user'"
-            [class.text-white]="msg.sender === 'user'" [class.rounded-tr-none]="msg.sender === 'user'"
-            [class.border]="msg.sender === 'bot'" [class.border-gray-100]="msg.sender === 'bot'">
-            {{ msg.text }}
+        <div class="h-80 overflow-y-auto p-5 space-y-4 bg-[#F8F9FA]" #scrollContainer>
+          @for (msg of chatService.messages(); track msg.time) {
+            <div class="flex w-full" [class.justify-end]="msg.sender === 'user'">
+              <div class="max-w-[85%] p-3 px-4 text-sm shadow-sm"
+                [class.bg-white]="msg.sender === 'bot'"
+                [class.text-gray-700]="msg.sender === 'bot'"
+                [class.rounded-2xl]="true"
+                [class.rounded-tl-none]="msg.sender === 'bot'"
+                [class.bg-orange-500]="msg.sender === 'user'"
+                [class.text-white]="msg.sender === 'user'"
+                [class.rounded-tr-none]="msg.sender === 'user'"
+                [class.border]="msg.sender === 'bot'"
+                [class.border-gray-100]="msg.sender === 'bot'">
+                {{ msg.text }}
+              </div>
+            </div>
+          }
+
+          @if (chatService.isTyping()) {
+            <div class="flex gap-1 items-center p-3 bg-white w-14 rounded-2xl border border-gray-100 shadow-sm">
+              <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+              <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+              <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+            </div>
+          }
+        </div>
+
+        <div class="p-4 bg-white border-t border-gray-50">
+          <div class="flex items-center gap-2 bg-gray-50 rounded-2xl px-4 py-1 focus-within:bg-white focus-within:ring-2 focus-within:ring-orange-400 transition-all">
+            <input type="text" #chatInput
+                   (keyup.enter)="onSendMessage(chatInput)"
+                   placeholder="Type your message..."
+                   class="flex-1 bg-transparent border-none outline-none text-sm py-2 text-gray-800">
+            <button (click)="onSendMessage(chatInput)" class="text-orange-500 cursor-pointer p-1">
+              <i class="ri-send-plane-2-fill text-xl"></i>
+            </button>
           </div>
-        </div>
-        }
-
-        @if (chatService.isTyping()) {
-        <div class="flex gap-1 items-center p-3 bg-white w-14 rounded-2xl border border-gray-100 shadow-sm ml-2">
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-          <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
-        </div>
-        }
-      </div>
-
-      <div class="p-4 bg-white border-t border-gray-50">
-        <div
-          class="flex items-center gap-2 bg-gray-50 rounded-2xl px-4 py-1 border border-transparent focus-within:border-orange-400 focus-within:bg-white transition-all">
-          <input type="text" #chatInput (keyup.enter)="chatService.sendMessage(chatInput.value); chatInput.value = ''"
-            placeholder="Type your message..."
-            class="flex-1 bg-transparent border-none outline-none text-sm py-2 text-gray-800 placeholder:text-gray-400" />
-          <button (click)="chatService.sendMessage(chatInput.value); chatInput.value = ''"
-            class="text-orange-500 hover:text-orange-600 p-1 transition-transform active:scale-90 cursor-pointer">
-            <i class="ri-send-plane-2-fill text-xl"></i>
-          </button>
         </div>
       </div>
     </div>
-  </div>
   }
 
   <button (click)="chatService.toggle()"
-    class="fixed bottom-6 right-6 z-[999] w-14 h-14 bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-orange-600 transition-all hover:scale-110 active:scale-90 group cursor-pointer">
+          class="fixed bottom-6 right-6 z-[999] w-14 h-14 bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-90 transition-all cursor-pointer">
     <i [class]="chatService.isOpen() ? 'ri-arrow-down-s-line' : 'ri-chat-smile-3-line'" class="text-2xl"></i>
   </button>
 </main>
 
 @if (showLayout) {
-<app-footer></app-footer>
+  <app-footer></app-footer>
 }

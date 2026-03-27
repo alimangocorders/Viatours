@@ -9,7 +9,7 @@ export interface ChatMessage {
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   isOpen = signal(false);
-  isTyping = signal(false); // To show a "typing..." indicator
+  isTyping = signal(false);
   userMessageCount = signal(0);
 
   messages = signal<ChatMessage[]>([
@@ -23,31 +23,34 @@ export class ChatService {
   sendMessage(userText: string) {
     if (!userText.trim()) return;
 
-    // Add User Message
+    // 1. Add User Message
     const newMessage: ChatMessage = { text: userText, sender: 'user', time: new Date() };
     this.messages.update(prev => [...prev, newMessage]);
 
-    // Increment Counter
+    // 2. Update Count
     const newCount = this.userMessageCount() + 1;
     this.userMessageCount.set(newCount);
 
-    // Bot replies on message 4 and 6
-    if (newCount === 4 || newCount === 6) {
-      this.handleBotResponse(newCount);
-    }
+    // 3. Trigger Bot Response
+    this.handleBotResponse(newCount);
   }
 
   private handleBotResponse(count: number) {
     this.isTyping.set(true);
 
     setTimeout(() => {
-      let reply = count === 4
-        ? "I see! Let me check the availability for those dates. One moment..."
-        : "I've found some great options! Would you like me to send the itinerary to your email?";
+      let reply = "";
+      switch (count) {
+        case 1: reply = "That sounds like a great plan! Which destination are you interested in?"; break;
+        case 2: reply = "Excellent choice! How many people are traveling with you?"; break;
+        case 3: reply = "Got it. Let me check the best group rates for you..."; break;
+        case 4: reply = "I see! Let me check the availability for those dates. One moment..."; break;
+        default: reply = "Thank you for the details! Our team will get back to you shortly with a custom quote.";
+      }
 
       const botMsg: ChatMessage = { text: reply, sender: 'bot', time: new Date() };
       this.messages.update(prev => [...prev, botMsg]);
       this.isTyping.set(false);
-    }, 2000); // 2 second delay to feel real
+    }, 1500);
   }
 }

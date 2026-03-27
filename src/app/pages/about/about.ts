@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from "@angular/router";
 
 interface Stat {
   value: string;
@@ -16,7 +17,8 @@ interface ValueProp {
 @Component({
   selector: 'app-about',
   templateUrl: './about.html',
-  styleUrls: ['./about.css']
+  styleUrls: ['./about.css'],
+  imports: [RouterLink]
 })
 export class About {
   public stats: Stat[] = [

@@ -1,5 +1,4 @@
 <div class="min-h-screen bg-[#FDFCFB] flex flex-col font-sans">
-
   <section class="relative pt-36 pb-40 bg-(--primary-color) overflow-hidden">
     <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
       <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
@@ -7,14 +6,12 @@
       </h1>
 
       <div class="relative max-w-2xl mx-auto group">
-        <div
-          class="absolute -inset-1 bg-gradient-to-r from-orange-500 to-rose-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000">
-        </div>
+
         <div class="relative bg-white rounded-2xl flex items-center p-2 shadow-2xl">
           <i class="ri-search-2-line text-gray-400 ml-4 text-xl"></i>
           <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearchEnter()"
             placeholder="Search common questions..."
-            class="flex-grow px-4 py-4 focus:outline-none text-gray-800 text-base placeholder:text-gray-400">
+            class="flex-grow px-4 py-4 focus:outline-none text-gray-800 text-base placeholder:text-gray-400" />
           <button (click)="onSearchEnter()"
             class="bg-[#0a1128] hover:bg-black text-white px-8 py-4 rounded-xl font-bold transition-all active:scale-95 cursor-pointer">
             Search
@@ -27,7 +24,7 @@
         @for (s of ['Refunds', 'Visa Info', 'Safety', 'Vouchers']; track s) {
         <button (click)="setSearch(s)"
           class="bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-xs px-4 py-2 rounded-lg border border-white/10 transition-all cursor-pointer">
-          {{s}}
+          {{ s }}
         </button>
         }
       </div>
@@ -39,15 +36,18 @@
       @for (c of categories; track c.title) {
       <div
         class="bg-white rounded-2xl p-6 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center text-center cursor-pointer hover:border-orange-200 hover:-translate-y-2 transition-all duration-300 group">
-        <div
-          [class]="'w-14 h-14 ' + c.bg + ' rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform'">
+        <div [class]="
+              'w-14 h-14 ' +
+              c.bg +
+              ' rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform'
+            ">
           <i [class]="c.icon + ' text-2xl ' + c.color"></i>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm mb-1">{{c.title}}</h3>
-        <p class="text-gray-400 text-[11px] leading-relaxed mb-3 line-clamp-2">{{c.desc}}</p>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">{{ c.title }}</h3>
+        <p class="text-gray-400 text-[11px] leading-relaxed mb-3 line-clamp-2">{{ c.desc }}</p>
         <span
           class="text-[10px] font-black uppercase tracking-tighter px-2 py-1 rounded bg-gray-50 text-gray-500 group-hover:bg-orange-50 group-hover:text-(--primary-color) transition-colors">
-          {{c.count}} Resources
+          {{ c.count }} Resources
         </span>
       </div>
       }
@@ -70,8 +70,8 @@
             class="bg-white border-b border-gray-100 last:border-0 overflow-hidden transition-all duration-300 shadow-md rounded-xl">
             <button (click)="toggleFaq(i)"
               class="w-full py-6 px-6 flex items-start justify-between text-left gap-6 group cursor-pointer">
-              <span
-                class="font-bold text-lg text-gray-800 group-hover:text-(--primary-color) transition-colors">{{faq.q}}</span>
+              <span class="font-bold text-lg text-gray-800 group-hover:text-(--primary-color) transition-colors">{{
+                faq.q }}</span>
               <div
                 class="mt-1 w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-(--primary-color) group-hover:text-white transition-all shadow-sm"
                 [class.bg-orange-500]="openFaqIndex() === i" [class.text-white]="openFaqIndex() === i">
@@ -82,14 +82,16 @@
 
             @if (openFaqIndex() === i) {
             <div class="pb-8 px-6 text-gray-500 leading-relaxed text-[15px]">
-              {{faq.a}}
+              {{ faq.a }}
             </div>
             }
           </div>
           } @empty {
           <div class="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
             <i class="ri-search-line text-5xl text-gray-300 mb-4 block"></i>
-            <p class="text-gray-500 text-lg font-bold">No questions found matching "{{searchQuery()}}"</p>
+            <p class="text-gray-500 text-lg font-bold">
+              No questions found matching "{{ searchQuery() }}"
+            </p>
             <button (click)="searchQuery.set('')"
               class="mt-4 text-(--primary-color) font-black uppercase tracking-widest text-xs hover:underline cursor-pointer">
               Show all questions
@@ -105,7 +107,9 @@
             <i class="ri-customer-service-2-fill text-9xl"></i>
           </div>
           <h3 class="text-2xl font-black mb-2">Can't find it?</h3>
-          <p class="text-white/60 text-sm mb-8">Our support ninjas are ready to jump in and help you 24/7.</p>
+          <p class="text-white/60 text-sm mb-8">
+            Our support ninjas are ready to jump in and help you 24/7.
+          </p>
           <div class="space-y-3 relative z-10">
             <button (click)="chatService.open()"
               class="w-full bg-(--primary-color) hover:bg-orange-500 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 cursor-pointer">
@@ -128,14 +132,15 @@
       <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       <div class="relative z-10">
         <h2 class="text-3xl md:text-5xl font-black mb-6">Experience a better way to travel</h2>
-        <p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">Join over 50,000+ travelers who trust Viatours for
-          their global adventures.</p>
+        <p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
+          Join over 50,000+ travelers who trust Viatours for their global adventures.
+        </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <button
+          <button routerLink="/destinations"
             class="bg-white text-gray-900 px-10 py-5 rounded-2xl font-black shadow-xl hover:shadow-orange-500/20 transition-all active:scale-95 cursor-pointer">
             Explore Destinations
           </button>
-          <button
+          <button routerLink="/contact"
             class="bg-black/20 backdrop-blur-md text-white border border-white/30 px-10 py-5 rounded-2xl font-black hover:bg-black/30 transition-all cursor-pointer">
             Contact us
           </button>
@@ -143,5 +148,4 @@
       </div>
     </div>
   </section>
-
 </div>

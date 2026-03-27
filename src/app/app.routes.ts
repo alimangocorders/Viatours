@@ -10,7 +10,6 @@ import { Signup } from './pages/signup/signup';
 import { Destinations } from './pages/destinations/destinations';
 import { DestinationDetails } from './pages/destination-details/destination-details';
 import { Listing } from './pages/listing/listing';
-
 import { Contact } from './pages/contact/contact';
 import { TripDetail } from './pages/trip-detail/trip-detail';
 import { Booking } from './pages/booking/booking';

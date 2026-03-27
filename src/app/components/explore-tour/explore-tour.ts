@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-explore-tour',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './explore-tour.html',
   styleUrl: './explore-tour.css',
 })
