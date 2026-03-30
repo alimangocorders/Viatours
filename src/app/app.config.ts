@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router'; // Import withInMemoryScrolling
+import { provideRouter, withInMemoryScrolling, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 
@@ -8,10 +8,12 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(
       routes,
-      // This configuration fixes the "staying at the bottom" issue
       withInMemoryScrolling({
-        scrollPositionRestoration: 'top'
-      })
+        // This is the correct set of properties for modern Angular
+        scrollPositionRestoration: 'top',
+        anchorScrolling: 'enabled'
+      }),
+      withComponentInputBinding()
     )
   ]
 };

@@ -18,6 +18,9 @@ import { Reviews } from './pages/reviews/reviews';
 import { TravelGuides } from './pages/travel-guides/travel-guides';
 import { HowItWorks } from './pages/how-it-works/how-it-works';
 import { HelpCenter } from './pages/help-center/help-center';
+import { Articles } from './pages/articles/articles';
+import { ArticleDetail } from './pages/article-detail/article-detail';
+
 
 
 
@@ -39,7 +42,8 @@ export const routes: Routes = [
   { path: 'travelguides', component: TravelGuides},
   { path: 'how-it-works', component: HowItWorks},
   { path: 'help-center', component: HelpCenter},
-
+  { path: 'articles', component: Articles},
+  { path: 'articles/:id', component: ArticleDetail },
 
 
 

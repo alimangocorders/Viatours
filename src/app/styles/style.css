@@ -38,3 +38,20 @@ body {
 .cursor-pointer{
   cursor: pointer !important;
 }
+
+
+
+html {
+  /* Smooth gliding effect for the Table of Contents */
+  scroll-behavior: smooth;
+
+  /* This replaces 'scrollOffset'.
+     Adjust '100px' to match your navbar height + some breathing room.
+  */
+  scroll-padding-top: 100px;
+}
+
+/* Optional: If you want to highlight the section being linked to */
+:target {
+  scroll-margin-top: 100px;
+}
